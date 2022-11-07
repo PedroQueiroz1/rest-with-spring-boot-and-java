@@ -40,6 +40,14 @@ public class PersonController {
 		return service.create(person);
 	}
 
+	// ------------- POST V2 ---------------------
+	/*@PostMapping(value= "/v2", consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public PersonVOV2 createV2(@RequestBody PersonVOV2 person) {
+		return service.createV2(person);
+	}*/
+	// --------------------------------------------
+	
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public PersonVO update(@RequestBody PersonVO person) {

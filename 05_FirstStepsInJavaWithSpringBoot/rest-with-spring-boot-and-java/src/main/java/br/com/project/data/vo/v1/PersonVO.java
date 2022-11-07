@@ -8,20 +8,13 @@ public class PersonVO implements Serializable{
 	private static final long serialVersionUID = 1L;
  
 	private Long id;
-	
 	private String firstName;
-	
 	private String lastName;
-	
 	private String address;
-	
 	private String gender;
 
-	
-
+	//Constructor
 	public PersonVO() {}
-	
-
 
 
 	public Long getId() {
@@ -63,11 +56,6 @@ public class PersonVO implements Serializable{
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 
 
 
