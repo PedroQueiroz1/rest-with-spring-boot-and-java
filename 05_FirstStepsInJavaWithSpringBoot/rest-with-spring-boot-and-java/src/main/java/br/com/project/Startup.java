@@ -11,3 +11,5 @@ public class Startup {
 	}
 
 }
+// restaurar o banco 
+// mvn clean package spring-boot:run -DskipTests
