@@ -27,13 +27,18 @@ public class PersonService {
 	@Autowired
 	PersonMapper mapper;
 
+	// --------- FIND-ALL ------------
 	public List<PersonVO> findAll() {
 
 		logger.info("Finding all people!");
 
-		return DozerMapper.parseListObject(personRepository.findAll(), PersonVO.class);
+		List<PersonVO> persons = DozerMapper.parseListObject(personRepository.findAll(), PersonVO.class);
+		persons.stream().forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+		
+		return persons;
 	}
 
+	// --------- FIND-BY-ID ------------
 	public PersonVO findById(Long id) {
 
 		logger.info("Finding one person!");
@@ -48,24 +53,18 @@ public class PersonService {
 	
 	}
 
+	// --------- CREATE ------------
 	public PersonVO create(PersonVO person) {
 		logger.info("Creating one Person!");
 		
 		var entity = DozerMapper.parseObject(person, Person.class);
-		var vo = DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+		PersonVO vo = DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+		vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
+		
 		return vo;
 	}
-	
-	// create V2 
-/*	public PersonVOV2 createV2(PersonVOV2 person) {
-		logger.info("Creating one Person! (V2)");
-		
-		var entity = mapper.convertVOToEntity(person);
-		var vo = mapper.convertEntityToVO(personRepository.save(entity));
-		return vo; 
-	}*/
-	// - - - - - -
 
+	// --------- UPDATE ------------
 	public PersonVO update(PersonVO person) {
 		logger.info("Updating one Person!");
 
@@ -78,9 +77,12 @@ public class PersonService {
 		entity.setGender(person.getGender());
 		
 		PersonVO vo = DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+		vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
+		
 		return vo;
 	}
 
+	// --------- DELETE ------------
 	public void delete(Long id) {
 		logger.info("Deleting one Person!");
 
@@ -90,4 +92,15 @@ public class PersonService {
 		personRepository.delete(entity);
 	}
 
+	
+	// trash \/
+	// create V2 
+/*	public PersonVOV2 createV2(PersonVOV2 person) {
+		logger.info("Creating one Person! (V2)");
+		
+		var entity = mapper.convertVOToEntity(person);
+		var vo = mapper.convertEntityToVO(personRepository.save(entity));
+		return vo; 
+	}*/
+	// - - - - - -
 }
