@@ -33,8 +33,6 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
 	public PersonVO() {}
 
 
-	
-	
 	public Long getKey() {
 		return key;
 	}
