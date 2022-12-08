@@ -1,6 +1,9 @@
 package br.com.project.unittests.mockito.services;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -15,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import br.com.project.data.vo.v1.PersonVO;
 import br.com.project.model.Person;
 import br.com.project.repositories.PersonRepository;
 import br.com.project.services.PersonService;
@@ -30,7 +34,7 @@ class PersonServiceTest {
 	private PersonService service;
 	
 	@Mock
-	PersonRepository repository;
+	PersonRepository personRepository;
 	
 	@BeforeEach
 	void setUpMocks() throws Exception {
@@ -41,16 +45,16 @@ class PersonServiceTest {
 
 	@Test
 	void testFindById() {
-		Person person = input.mockEntity(1);
-		person.setId(1L);
+		Person entity = input.mockEntity(1);
+		entity.setId(1L);
 		
-		when(repository.findById(1L)).thenReturn(Optional.of(person));
+		when(personRepository.findById(1L)).thenReturn(Optional.of(entity));
 		
 		var result = service.findById(1L);
 		assertNotNull(result);
 		assertNotNull(result.getKey());
 		assertNotNull(result.getLinks());
-		System.out.println(result.toString());
+		
 		assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
 		assertEquals("Address Test1",result.getAddress());
 		assertEquals("First Name Test1",result.getFirstName());
@@ -58,24 +62,79 @@ class PersonServiceTest {
 		assertEquals("Female",result.getGender());
 	}
 	
-	/*@Test
-	void testFindAll() {
-		fail("Not yet implemented");
-	}
-
+	
+	// Not functioning correctly... :(
+	// 'save' method is getting an error
 	@Test
 	void testCreate() {
-		fail("Not yet implemented");
+		Person entity = input.mockEntity(1);
+		entity.setId(1L);
+		
+		Person persisted = entity;
+		persisted.setId(1L);
+		
+		PersonVO vo = input.mockVO(1);
+		vo.setKey(1L);
+	
+		when(personRepository.save(entity)).thenReturn(persisted);
+//		doReturn(persisted).when(repository.save(entity));
+		
+		var result = service.create(vo);
+	
+		assertNotNull(result);
+		assertNotNull(result.getKey());
+		assertNotNull(result.getLinks());
+		
+		assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
+		assertEquals("Address Test1",result.getAddress());
+		assertEquals("First Name Test1",result.getFirstName());
+		assertEquals("Last Name Test1",result.getLastName());
+		assertEquals("Female",result.getGender());
+	}
+	
+	
+	@Test
+	void testUpdate() {	
+		Person entity = input.mockEntity(1);	
+		
+		Person persisted = entity;
+		persisted.setId(1L);
+		
+		PersonVO vo = input.mockVO(1);
+		vo.setKey(1L);
+		
+		when(personRepository.findById(1L)).thenReturn(Optional.of(entity));
+		when(personRepository.save(entity)).thenReturn(persisted);
+		
+		var result = service.update(vo);
+	
+		assertNotNull(result);
+		assertNotNull(result.getKey());
+		assertNotNull(result.getLinks());
+		
+		assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
+		assertEquals("Address Test1",result.getAddress());
+		assertEquals("First Name Test1",result.getFirstName());
+		assertEquals("Last Name Test1",result.getLastName());
+		assertEquals("Female",result.getGender());
 	}
 
-	@Test
-	void testUpdate() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	void testDelete() {
+	Person entity = input.mockEntity(1);
+	entity.setId(1L);
+	
+	when(personRepository.findById(1L)).thenReturn(Optional.of(entity));
+	
+	service.delete(1L);
+	}
+	
+	/*@Test
+	void testFindAll() {
 		fail("Not yet implemented");
 	}*/
+	
+	
 
 }
