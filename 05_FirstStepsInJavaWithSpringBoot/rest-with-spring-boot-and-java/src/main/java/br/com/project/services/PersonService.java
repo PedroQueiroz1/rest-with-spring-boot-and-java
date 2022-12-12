@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.project.controllers.PersonController;
 import br.com.project.data.vo.v1.PersonVO;
+import br.com.project.exceptions.RequiredObjectIsNullException;
 import br.com.project.exceptions.ResourceNotFoundException;
 import br.com.project.mapper.DozerMapper;
 import br.com.project.mapper.custom.PersonMapper;
@@ -50,11 +51,12 @@ public class PersonService {
 		vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
 				
 		return vo;
-	
 	}
 
 	// --------- CREATE ------------
 	public PersonVO create(PersonVO person) {
+		
+		if (person == null) throw new RequiredObjectIsNullException();
 		logger.info("Creating one Person!");
 		
 		var entity = DozerMapper.parseObject(person, Person.class);
