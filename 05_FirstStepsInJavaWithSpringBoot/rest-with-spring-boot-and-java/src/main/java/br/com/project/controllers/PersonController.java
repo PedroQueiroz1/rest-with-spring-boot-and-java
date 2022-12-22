@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class PersonController {
 
 	@Autowired
-	private PersonService service;
+	private PersonService personService;
 
 
 	//GET MAPPING
@@ -52,11 +52,11 @@ public class PersonController {
 		}
 	)
 	public List<PersonVO> findAll() {
-		return service.findAll();
+		return personService.findAll();
 	}
 	
 	
-	// GET MAPPING
+	//GET MAPPING
 	@GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
 	@Operation(summary = "Finds a person", description = "Finds a person",
 	tags = {"People"},
@@ -72,7 +72,7 @@ public class PersonController {
 	}
 )
 	public PersonVO findById(@PathVariable(value = "id") Long id) {
-		return service.findById(id);
+		return personService.findById(id);
 	}
 
 	
@@ -92,7 +92,7 @@ public class PersonController {
 	}
 )
 	public PersonVO create(@RequestBody PersonVO person) {
-		return service.create(person);
+		return personService.create(person);
 	}
 
 	
@@ -113,7 +113,7 @@ public class PersonController {
 	}
 )
 	public PersonVO update(@RequestBody PersonVO person) {
-		return service.update(person);
+		return personService.update(person);
 	}
 
 	
@@ -131,7 +131,7 @@ public class PersonController {
 	}
 )
 	public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
-		service.delete(id);
+		personService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 }
