@@ -80,7 +80,7 @@ public class PersonController {
 	@PostMapping(consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
 				produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
 	@Operation(summary = "Adds a person", 
-	description = "Adds a new person by passing in a JSON, XML or YML representation of the person",
+	description = "Adds a new person by passing a JSON, XML or YML representation of the person",
 	tags = {"People"},
 	responses = {
 			@ApiResponse(description = "Success", responseCode = "200", 
@@ -100,7 +100,7 @@ public class PersonController {
 	@PutMapping(consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
 				produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
 	@Operation(summary = "Updates a person", 
-	description = "Updates a person by passing in a JSON, XML or YML representation of the person",
+	description = "Updates a person by passing a JSON, XML or YML representation of the person",
 	tags = {"People"},
 	responses = {
 			@ApiResponse(description = "Success", responseCode = "200", 

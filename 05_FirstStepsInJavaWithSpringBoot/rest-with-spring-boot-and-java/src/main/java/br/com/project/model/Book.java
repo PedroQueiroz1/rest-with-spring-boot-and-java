@@ -1,8 +1,7 @@
 package br.com.project.model;
 
 import java.io.Serializable;
-
-import org.hibernate.validator.constraints.Length;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,48 +9,33 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name="books")
-public class Book implements Serializable{
+@Table(name = "books")
+public class Book implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id", updatable = false, nullable = false)
 	private Long id;
 	
-	@Column(name="title", nullable=false)
-	@Length(min = 1, max = 80)
-	@NotBlank
-	private String title;
-
-	@Column(name="theme", nullable=false)
-	@Length(min = 1, max = 80)
-	@NotBlank
-	private String theme;
-
-	@Column(name="author", nullable=false)
-	@Length(min = 1, max = 80)
-	@NotBlank
+	@Column(nullable = false, length = 180)
 	private String author;
 
-	@Column(name="pageQuantity", nullable=false)
-	@NotNull
-	@Min(value = 1)
-	@Max(value = 50560)
-	private short pageQuantity;
+	@Column(name = "launch_date", nullable = false)
+	@Temporal(TemporalType.DATE)
+	private Date launchDate;
 	
-	@Column(name="difficultyToRead", nullable=false)
-	@NotNull
-	@Min(value = 0)
-	@Max(value = 10)
-	private byte difficultyToRead;
+	@Column(nullable = false)
+	private Double price;
+	
+	@Column(nullable = false, length = 250)
+	private String title;
+	
+	public Book() {}
 
 	public Long getId() {
 		return id;
@@ -59,22 +43,6 @@ public class Book implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getTheme() {
-		return theme;
-	}
-
-	public void setTheme(String theme) {
-		this.theme = theme;
 	}
 
 	public String getAuthor() {
@@ -85,20 +53,28 @@ public class Book implements Serializable{
 		this.author = author;
 	}
 
-	public short getPageQuantity() {
-		return pageQuantity;
+	public Date getLaunchDate() {
+		return launchDate;
 	}
 
-	public void setPageQuantity(short pageQuantity) {
-		this.pageQuantity = pageQuantity;
+	public void setLaunchDate(Date launchDate) {
+		this.launchDate = launchDate;
 	}
 
-	public byte getDifficultyToRead() {
-		return difficultyToRead;
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setDifficultyToRead(byte difficultyToRead) {
-		this.difficultyToRead = difficultyToRead;
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	@Override
@@ -106,10 +82,9 @@ public class Book implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((author == null) ? 0 : author.hashCode());
-		result = prime * result + difficultyToRead;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + pageQuantity;
-		result = prime * result + ((theme == null) ? 0 : theme.hashCode());
+		result = prime * result + ((launchDate == null) ? 0 : launchDate.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -128,19 +103,20 @@ public class Book implements Serializable{
 				return false;
 		} else if (!author.equals(other.author))
 			return false;
-		if (difficultyToRead != other.difficultyToRead)
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (pageQuantity != other.pageQuantity)
-			return false;
-		if (theme == null) {
-			if (other.theme != null)
+		if (launchDate == null) {
+			if (other.launchDate != null)
 				return false;
-		} else if (!theme.equals(other.theme))
+		} else if (!launchDate.equals(other.launchDate))
+			return false;
+		if (price == null) {
+			if (other.price != null)
+				return false;
+		} else if (!price.equals(other.price))
 			return false;
 		if (title == null) {
 			if (other.title != null)
@@ -149,7 +125,4 @@ public class Book implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
 }
