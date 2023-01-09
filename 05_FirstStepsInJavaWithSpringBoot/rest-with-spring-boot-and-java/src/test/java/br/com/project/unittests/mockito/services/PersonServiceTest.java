@@ -25,7 +25,7 @@ import br.com.project.exceptions.RequiredObjectIsNullException;
 import br.com.project.model.Person;
 import br.com.project.repositories.PersonRepository;
 import br.com.project.services.PersonService;
-import br.com.projeto.unittests.mapper.mocks.MockPerson;
+import br.com.project.unittests.mapper.mocks.MockPerson;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)

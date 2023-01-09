@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import br.com.project.data.vo.v1.PersonVO;
 import br.com.project.mapper.DozerMapper;
 import br.com.project.model.Person;
-import br.com.projeto.unittests.mapper.mocks.MockPerson;
+import br.com.project.unittests.mapper.mocks.MockPerson;
 
 public class DozerConverterTest {
     

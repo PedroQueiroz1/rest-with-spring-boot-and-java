@@ -21,7 +21,7 @@ import br.com.project.exceptions.RequiredObjectIsNullException;
 import br.com.project.model.Book;
 import br.com.project.repositories.BookRepository;
 import br.com.project.services.BookService;
-import br.com.projeto.unittests.mapper.mocks.MockBook;
+import br.com.project.unittests.mapper.mocks.MockBook;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
