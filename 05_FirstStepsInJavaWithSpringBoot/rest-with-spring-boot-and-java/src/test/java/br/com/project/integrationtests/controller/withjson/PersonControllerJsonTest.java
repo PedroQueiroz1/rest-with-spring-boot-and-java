@@ -121,7 +121,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
-	@Order(3)
+	@Order(4)
 	public void testFindByIdWithWrongOrigin() throws JsonMappingException, JsonProcessingException {
 		mockPerson();
 
