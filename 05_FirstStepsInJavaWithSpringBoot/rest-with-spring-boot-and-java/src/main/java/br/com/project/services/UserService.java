@@ -7,14 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
-
 import org.springframework.stereotype.Service;
 
-import br.com.project.controllers.PersonController;
-import br.com.project.exceptions.ResourceNotFoundException;
-import br.com.project.mapper.DozerMapper;
-import br.com.project.model.User;
 import br.com.project.repositories.UserRepository;
 
 @Service
