@@ -9,62 +9,83 @@ public class TokenVO implements Serializable{
 	
 	private String username;
 	private Boolean authenticated;
-	private Date date;
+	private Date created;
+	private Date expirated;
 	private String accessToken;
 	private String refreshToken;
 	
-	public TokenVO(String username, Boolean authenticated, 
-			Date date, String accessToken, String refreshToken) {
+	public TokenVO(String username, Boolean authenticated, Date created, Date expirated, String accessToken,
+			String refreshToken) {
 		super();
 		this.username = username;
 		this.authenticated = authenticated;
-		this.date = date;
+		this.created = created;
+		this.expirated = expirated;
 		this.accessToken = accessToken;
 		this.refreshToken = refreshToken;
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public Boolean getAuthenticated() {
 		return authenticated;
 	}
+
 	public void setAuthenticated(Boolean authenticated) {
 		this.authenticated = authenticated;
 	}
-	public Date getDate() {
-		return date;
+
+	public Date getCreated() {
+		return created;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+
+	public void setCreated(Date created) {
+		this.created = created;
 	}
+
+	public Date getExpirated() {
+		return expirated;
+	}
+
+	public void setExpirated(Date expirated) {
+		this.expirated = expirated;
+	}
+
 	public String getAccessToken() {
 		return accessToken;
 	}
+
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
 	}
+
 	public String getRefreshToken() {
 		return refreshToken;
 	}
+
 	public void setRefreshToken(String refreshToken) {
 		this.refreshToken = refreshToken;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((accessToken == null) ? 0 : accessToken.hashCode());
 		result = prime * result + ((authenticated == null) ? 0 : authenticated.hashCode());
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((created == null) ? 0 : created.hashCode());
+		result = prime * result + ((expirated == null) ? 0 : expirated.hashCode());
 		result = prime * result + ((refreshToken == null) ? 0 : refreshToken.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -84,10 +105,15 @@ public class TokenVO implements Serializable{
 				return false;
 		} else if (!authenticated.equals(other.authenticated))
 			return false;
-		if (date == null) {
-			if (other.date != null)
+		if (created == null) {
+			if (other.created != null)
 				return false;
-		} else if (!date.equals(other.date))
+		} else if (!created.equals(other.created))
+			return false;
+		if (expirated == null) {
+			if (other.expirated != null)
+				return false;
+		} else if (!expirated.equals(other.expirated))
 			return false;
 		if (refreshToken == null) {
 			if (other.refreshToken != null)
@@ -101,7 +127,8 @@ public class TokenVO implements Serializable{
 			return false;
 		return true;
 	}
-
+	
+	
 	
 	
 }
