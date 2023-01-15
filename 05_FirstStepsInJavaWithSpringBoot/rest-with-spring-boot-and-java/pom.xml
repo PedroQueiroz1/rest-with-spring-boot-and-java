@@ -4,19 +4,21 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.0-RC1</version>
+		<version>3.0.0-RC1</version> <!-- versão do curso: 3.0.0-M2 -->
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.projeto</groupId>
-	<artifactId>rest-with-spring-boot-and-java</artifactId>
+	<groupId>br.com.erudio</groupId>
+	<artifactId>rest-with-spring-boot-and-java-erudio</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>rest-with-spring-boot-and-java</name>
-	<description>Erudio</description>
+	<name>rest-with-spring-boot-and-java-erudio</name>
 	<properties>
-		<java.version>17</java.version>
-		<dozer.version>6.4.0</dozer.version>
-		<springdoc.version>2.0.0</springdoc.version>
+		<java.version>17</java.version> <!-- versão do curso: 18 -->
+		<dozer.version>6.4.0</dozer.version> 
+		<springdoc.version>2.0.0</springdoc.version> <!-- versão do curso: 2.0.0-M1 -->
+		<testcontainers.version>1.17.6</testcontainers.version> <!-- versão do curso: 1.16.3 -->
+		<rest-assured.version>4.5.0</rest-assured.version>
 		<java-jwt.version>3.18.3</java-jwt.version>
+
 	</properties>
 	<dependencies>
 		<dependency>
@@ -28,12 +30,17 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.hateoas</groupId>
+			<artifactId>spring-hateoas</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.hateoas</groupId>
-			<artifactId>spring-hateoas</artifactId>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>${java-jwt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
@@ -57,6 +64,7 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-mysql</artifactId>
@@ -67,12 +75,7 @@
 			<artifactId>dozer-core</artifactId>
 			<version>${dozer.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -86,22 +89,21 @@
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
+			<version>${rest-assured.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>mysql</artifactId>
-			<version>1.17.6</version>
+			<version>${testcontainers.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>2.0.1.Final</version>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 
