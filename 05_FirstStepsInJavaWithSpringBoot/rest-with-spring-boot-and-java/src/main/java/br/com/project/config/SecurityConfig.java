@@ -26,8 +26,6 @@ import br.com.project.security.jwt.JwtTokenProvider;
 @EnableWebSecurity
 public class SecurityConfig {
 
-
-
 	@Autowired
 	private JwtTokenProvider tokenProvider;
 	

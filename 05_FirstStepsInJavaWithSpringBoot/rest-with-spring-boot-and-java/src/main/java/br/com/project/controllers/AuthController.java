@@ -33,6 +33,7 @@ public class AuthController {
 		return token;
 	}
 
+	
 	private boolean checkIfParamsIsNotNull(AccountCredentialsVO data) {
 		return data == null || data.getUsername() == null || data.getUsername().isBlank()
 				 || data.getPassword() == null || data.getPassword().isBlank();
