@@ -51,7 +51,7 @@ public class AuthControllerYamlTest extends AbstractIntegrationTest {
 				.addFilter(new ResponseLoggingFilter(LogDetail.ALL))
 				.build();
 		
-		tokenVO = given()
+		tokenVO = given().spec(specification)
 				.config(
 						RestAssuredConfig
 							.config()
@@ -80,9 +80,7 @@ public class AuthControllerYamlTest extends AbstractIntegrationTest {
 	@Test
 	@Order(2)
 	public void testRefresh() throws JsonMappingException, JsonProcessingException {
-		
-		AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
-		
+	
 		var newTokenVO = given()
 				.config(
 						RestAssuredConfig
