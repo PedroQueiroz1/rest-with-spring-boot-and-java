@@ -29,8 +29,6 @@ public class PersonVO implements Serializable{
 	public PersonVO() {}
 
 
-
-
 	public Long getId() {
 		return id;
 	}
