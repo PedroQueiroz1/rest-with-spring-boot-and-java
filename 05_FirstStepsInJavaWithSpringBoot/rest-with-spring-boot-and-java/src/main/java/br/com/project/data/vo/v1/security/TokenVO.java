@@ -14,9 +14,7 @@ public class TokenVO implements Serializable{
 	private String accessToken;
 	private String refreshToken;
 	
-	public TokenVO() {
-
-	}
+	public TokenVO() {}
 	
 	public TokenVO(String username, Boolean authenticated, Date created, Date expirated, String accessToken,
 			String refreshToken) {
