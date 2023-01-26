@@ -15,16 +15,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import br.com.project.configs.TestConfigs;
+import br.com.project.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.project.integrationtests.vo.AccountCredentialsVO;
 import br.com.project.integrationtests.vo.TokenVO;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.filter.log.LogDetail;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(OrderAnnotation.class)
-public class AuthControllerJsonTest {
+public class AuthControllerJsonTest extends AbstractIntegrationTest {
 
 	private static TokenVO tokenVO;
 	
@@ -49,6 +46,31 @@ public class AuthControllerJsonTest {
 
 		assertNotNull(tokenVO.getAccessToken());
 		assertNotNull(tokenVO.getRefreshToken());
+		
+	}
+	
+	@Test
+	@Order(2)
+	public void testRefresh() throws JsonMappingException, JsonProcessingException {
+		
+		AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
+		
+		var newTokenVO = given()
+				.basePath("/auth/refresh")
+				.port(TestConfigs.SERVER_PORT)
+				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+					.pathParam("username", tokenVO.getUsername())
+					.header(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + tokenVO.getRefreshToken())
+				.when()
+					.put("{username}")
+				.then()
+					.statusCode(200)
+				.extract()
+					.body()
+						.as(TokenVO.class);
+		
+		assertNotNull(newTokenVO.getAccessToken());
+		assertNotNull(newTokenVO.getRefreshToken());
 		
 	}
 }
