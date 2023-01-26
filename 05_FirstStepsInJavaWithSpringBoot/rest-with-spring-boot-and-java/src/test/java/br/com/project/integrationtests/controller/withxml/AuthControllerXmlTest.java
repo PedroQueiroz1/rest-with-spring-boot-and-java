@@ -16,9 +16,7 @@ import br.com.project.configs.TestConfigs;
 import br.com.project.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.project.integrationtests.vo.AccountCredentialsVO;
 import br.com.project.integrationtests.vo.TokenVO;
-import jakarta.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(OrderAnnotation.class)
 public class AuthControllerXmlTest extends AbstractIntegrationTest {
