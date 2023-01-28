@@ -34,7 +34,6 @@ public class AuthControllerYamlTest extends AbstractIntegrationTest {
 	private static YMLMapper objectMapper;
 	private static TokenVO tokenVO;
 	
-
 	@BeforeAll
 	public static void setup() {
 		objectMapper = new YMLMapper();
@@ -44,21 +43,22 @@ public class AuthControllerYamlTest extends AbstractIntegrationTest {
 	@Order(1)
 	public void testSignin() throws JsonMappingException, JsonProcessingException {
 		
-		AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
+		AccountCredentialsVO user = 
+				new AccountCredentialsVO("leandro", "admin123");
 		
 		RequestSpecification specification = new RequestSpecBuilder()
-				.addFilter(new RequestLoggingFilter(LogDetail.ALL))
-				.addFilter(new ResponseLoggingFilter(LogDetail.ALL))
+					.addFilter(new RequestLoggingFilter(LogDetail.ALL))
+					.addFilter(new ResponseLoggingFilter(LogDetail.ALL))
 				.build();
 		
 		tokenVO = given().spec(specification)
 				.config(
-						RestAssuredConfig
-							.config()
-							.encoderConfig(EncoderConfig.encoderConfig()
-								.encodeContentTypeAs(
-										TestConfigs.CONTENT_TYPE_YML,
-										ContentType.TEXT)))
+					RestAssuredConfig
+						.config()
+						.encoderConfig(EncoderConfig.encoderConfig()
+							.encodeContentTypeAs(
+								TestConfigs.CONTENT_TYPE_YML,
+								ContentType.TEXT)))
 				.accept(TestConfigs.CONTENT_TYPE_YML)
 				.basePath("/auth/signin")
 					.port(TestConfigs.SERVER_PORT)
@@ -71,24 +71,23 @@ public class AuthControllerYamlTest extends AbstractIntegrationTest {
 							.extract()
 							.body()
 								.as(TokenVO.class, objectMapper);
-
+		
 		assertNotNull(tokenVO.getAccessToken());
 		assertNotNull(tokenVO.getRefreshToken());
-		
 	}
 	
 	@Test
 	@Order(2)
 	public void testRefresh() throws JsonMappingException, JsonProcessingException {
-	
+		
 		var newTokenVO = given()
 				.config(
-						RestAssuredConfig
-							.config()
-							.encoderConfig(EncoderConfig.encoderConfig()
-								.encodeContentTypeAs(
-										TestConfigs.CONTENT_TYPE_YML,
-										ContentType.TEXT)))
+					RestAssuredConfig
+						.config()
+						.encoderConfig(EncoderConfig.encoderConfig()
+							.encodeContentTypeAs(
+								TestConfigs.CONTENT_TYPE_YML,
+								ContentType.TEXT)))
 				.accept(TestConfigs.CONTENT_TYPE_YML)
 				.basePath("/auth/refresh")
 				.port(TestConfigs.SERVER_PORT)
@@ -105,6 +104,5 @@ public class AuthControllerYamlTest extends AbstractIntegrationTest {
 		
 		assertNotNull(newTokenVO.getAccessToken());
 		assertNotNull(newTokenVO.getRefreshToken());
-		
 	}
 }
