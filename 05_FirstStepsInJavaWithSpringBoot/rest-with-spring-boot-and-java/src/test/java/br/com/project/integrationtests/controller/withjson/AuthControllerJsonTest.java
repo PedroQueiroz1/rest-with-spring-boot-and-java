@@ -29,7 +29,8 @@ public class AuthControllerJsonTest extends AbstractIntegrationTest {
 	@Order(1)
 	public void testSignin() throws JsonMappingException, JsonProcessingException {
 		
-		AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
+		AccountCredentialsVO user = 
+				new AccountCredentialsVO("leandro", "admin123");
 		
 		tokenVO = given()
 				.basePath("/auth/signin")
@@ -43,17 +44,14 @@ public class AuthControllerJsonTest extends AbstractIntegrationTest {
 							.extract()
 							.body()
 								.as(TokenVO.class);
-
+		
 		assertNotNull(tokenVO.getAccessToken());
 		assertNotNull(tokenVO.getRefreshToken());
-		
 	}
 	
 	@Test
 	@Order(2)
 	public void testRefresh() throws JsonMappingException, JsonProcessingException {
-		
-		AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		
 		var newTokenVO = given()
 				.basePath("/auth/refresh")
@@ -71,6 +69,5 @@ public class AuthControllerJsonTest extends AbstractIntegrationTest {
 		
 		assertNotNull(newTokenVO.getAccessToken());
 		assertNotNull(newTokenVO.getRefreshToken());
-		
 	}
 }
