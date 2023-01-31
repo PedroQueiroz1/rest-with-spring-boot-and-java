@@ -3,7 +3,7 @@
 A project to learn more about Springboot, Docker and AWS.
 
 ## Description
-It is a project created to get more in depth with the Java language and to stay updated with new Java contents/frameworks.
+It is a project created to get more in depth in Java and to stay updated with new contents and frameworks.
 <br>It was made along with an Udemy course.
 <br>Professor: Leandro Costa,
 
