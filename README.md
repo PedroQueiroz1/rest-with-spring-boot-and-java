@@ -3,6 +3,9 @@
 A project to learn more about Springboot, Docker and AWS.
 
 ## Description
-I was curious about NodeJS and decided to study a little about it.
-<br>It was made along with the Udemy course: "Introdução ao Node JS + Express"
-<br>Professor: Guilherme Ferreira
+It is a project created to get more in depth in Java and to stay updated with new contents and frameworks.
+<br>It was made along with an Udemy course.
+<br>Professor: Leandro Costa,
+
+I'm studying a little more to stay updated with the new contents, etc. 
+<br>with this course: https://www.udemy.com/course/restful-apis-do-0-a-nuvem-com-springboot-e-docker
