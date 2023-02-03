@@ -92,7 +92,6 @@
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
-			<version>${rest-assured.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -100,6 +99,13 @@
 			<artifactId>mysql</artifactId>
 			<version>${testcontainers.version}</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 
