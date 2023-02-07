@@ -135,9 +135,6 @@ public class PersonVO implements Serializable{
 			return false;
 		return true;
 	}
-
-
-	
 	
 	
 }
