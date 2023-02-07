@@ -79,7 +79,13 @@ public class Person implements Serializable{
 		this.gender = gender;
 	}
 
+	public Boolean getEnabled() {
+		return enabled;
+	}
 
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 
 
 	@Override
