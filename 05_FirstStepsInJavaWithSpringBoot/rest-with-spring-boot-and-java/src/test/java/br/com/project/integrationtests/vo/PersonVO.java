@@ -25,6 +25,8 @@ public class PersonVO implements Serializable{
 //	@JsonIgnore
 	private String gender;
 
+	private Boolean enabled;
+	
 	//Constructor
 	public PersonVO() {}
 
@@ -69,7 +71,13 @@ public class PersonVO implements Serializable{
 		this.gender = gender;
 	}
 
+	public Boolean getEnabled() {
+		return enabled;
+	}
 
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 
 
 	@Override
