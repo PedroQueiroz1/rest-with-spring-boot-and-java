@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -36,7 +37,7 @@ public class PersonController {
 
 	//GET MAPPING
 	@GetMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
-	@Operation(summary = "Finds all people", description = "Finds all people",
+	@Operation(summary = "Find all people", description = "Find all people",
 		tags = {"People"},
 		responses = {
 				@ApiResponse(description = "Success", responseCode = "200", 
@@ -61,7 +62,7 @@ public class PersonController {
 	//GET MAPPING
 	@CrossOrigin(origins = "http://localhost:8080")
 	@GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
-	@Operation(summary = "Finds a person", description = "Finds a person",
+	@Operation(summary = "Find a person", description = "Find a person",
 	tags = {"People"},
 	responses = {
 			@ApiResponse(description = "Success", responseCode = "200", 
@@ -83,8 +84,8 @@ public class PersonController {
 	@CrossOrigin(origins = {"http://localhost:8080", "https://project.com.br"})
 	@PostMapping(consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
 				produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
-	@Operation(summary = "Adds a person", 
-	description = "Adds a new person by passing a JSON, XML or YML representation of the person",
+	@Operation(summary = "Add a person", 
+	description = "Add a new person by passing a JSON, XML or YML representation of the person",
 	tags = {"People"},
 	responses = {
 			@ApiResponse(description = "Success", responseCode = "200", 
@@ -103,8 +104,8 @@ public class PersonController {
 	//PUT MAPPING
 	@PutMapping(consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
 				produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
-	@Operation(summary = "Updates a person", 
-	description = "Updates a person by passing a JSON, XML or YML representation of the person",
+	@Operation(summary = "Update a person", 
+	description = "Update a person by passing a JSON, XML or YML representation of the person",
 	tags = {"People"},
 	responses = {
 			@ApiResponse(description = "Success", responseCode = "200", 
@@ -119,11 +120,29 @@ public class PersonController {
 	public PersonVO update(@RequestBody PersonVO person) {
 		return personService.update(person);
 	}
-
+	
+	// PATCH
+	@PatchMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+	@Operation(summary = "Disable a specific person by your id", description = "Disable a specific person by your id",
+	tags = {"People"},
+	responses = {
+			@ApiResponse(description = "Success", responseCode = "200", 
+					content = @Content(schema = @Schema(implementation = PersonVO.class))
+			),
+				@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+				@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+				@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+				@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+				@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+	}
+)
+	public PersonVO disablePerson(@PathVariable(value = "id") Long id) {
+		return personService.disablePerson(id);
+	}
 	
 	// DELETE
 	@DeleteMapping(value = "/{id}")
-	@Operation(summary = "Deletes a person", description = "Deletes a person",
+	@Operation(summary = "Delete a person", description = "Delete a person",
 	tags = {"People"},
 	responses = {
 			@ApiResponse(description = "No Content", responseCode = "204", content = @Content),

@@ -87,7 +87,7 @@ public class PersonService {
 
 	// --------- DISABLE PERSON ------------
 	@Transactional
-	public void disablePerson(Long id) {
+	public PersonVO disablePerson(Long id) {
 		
 		logger.info("Disabling one Person!");
 		personRepository.disablePerson(id);
@@ -96,7 +96,7 @@ public class PersonService {
 		
 		PersonVO vo = DozerMapper.parseObject(entity, PersonVO.class);
 		vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
-
+		return vo;
 	}
 
 	// --------- DELETE ------------
