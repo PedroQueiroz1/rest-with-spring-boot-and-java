@@ -69,6 +69,9 @@ public class PersonService {
 
 	// --------- UPDATE ------------
 	public PersonVO update(PersonVO person) {
+		
+		if (person == null) throw new RequiredObjectIsNullException();
+		
 		logger.info("Updating one Person!");
 
 		var entity = personRepository.findById(person.getKey())
