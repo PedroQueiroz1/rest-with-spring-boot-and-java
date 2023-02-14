@@ -261,6 +261,8 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		
 		PersonVO foundPersonOne = people.get(0);
 		
+		assertTrue(foundPersonOne.getEnabled());
+		
 		assertNotNull(foundPersonOne.getId());
 		assertNotNull(foundPersonOne.getFirstName());
 		assertNotNull(foundPersonOne.getLastName());
@@ -274,7 +276,10 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		assertEquals("São Paulo", foundPersonOne.getAddress());
 		assertEquals("Male", foundPersonOne.getGender());
 		
+		
 		PersonVO foundPersonSix = people.get(5);
+		
+		assertTrue(foundPersonSix.getEnabled());
 		
 		assertNotNull(foundPersonSix.getId());
 		assertNotNull(foundPersonSix.getFirstName());
