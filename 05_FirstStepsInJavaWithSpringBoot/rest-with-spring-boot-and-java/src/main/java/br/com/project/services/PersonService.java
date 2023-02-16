@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import org.springframework.stereotype.Service;
@@ -30,14 +33,18 @@ public class PersonService {
 	PersonMapper mapper;
 
 	// --------- FIND-ALL ------------
-	public List<PersonVO> findAll() {
+	public Page<PersonVO> findAll(Pageable pageable) {
 
 		logger.info("Finding all people!");
 
-		List<PersonVO> persons = DozerMapper.parseListObject(personRepository.findAll(), PersonVO.class);
-		persons.stream().forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+		var personPage = personRepository.findAll(pageable);
 		
-		return persons;
+		var personVOsPage = personPage.map(p -> DozerMapper.parseObject(p, PersonVO.class));
+		personVOsPage.map(
+				p -> p.add(
+						linkTo(methodOn(PersonController.class)
+								.findById(p.getKey())).withSelfRel()));
+		return personVOsPage;
 	}
 
 	// --------- FIND-BY-ID ------------
