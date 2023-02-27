@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -67,7 +68,7 @@ public class PersonController {
 		
 		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
 		
-		Pageable pageable = PageRequest.of(page, limit);
+		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "firstName"));
 		return ResponseEntity.ok(personService.findAll(pageable));
 	}
 	
