@@ -62,7 +62,7 @@ public class PersonController {
 	)
 	public ResponseEntity<Page<PersonVO>> findAll(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			@RequestParam(value = "limit", defaultValue = "12") Integer limit,
+			@RequestParam(value = "size", defaultValue = "12") Integer size,
 			@RequestParam(value = "direction", defaultValue = "asc") String direction) 
 	{		
 		
