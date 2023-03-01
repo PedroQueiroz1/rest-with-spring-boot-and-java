@@ -1,9 +1,6 @@
 package br.com.project.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -44,17 +41,17 @@ public class PersonController {
 
 
 	//GET MAPPING
-	@GetMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+	@GetMapping(
+			produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
 	@Operation(summary = "Find all people", description = "Find all people",
 		tags = {"People"},
 		responses = {
 				@ApiResponse(description = "Success", responseCode = "200", 
 						content = {
-								@Content(
-								      mediaType = "application/json",
-								      array = @ArraySchema(schema = @Schema(implementation = PersonVO.class))
-								)
-								
+							@Content(
+								mediaType = "application/json",
+								array = @ArraySchema(schema = @Schema(implementation = PersonVO.class))
+							)	
 						}),
 					@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
 					@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
