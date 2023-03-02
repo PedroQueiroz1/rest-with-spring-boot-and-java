@@ -1,6 +1,7 @@
 package br.com.project.repositories;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,6 +19,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	Person disablePerson(@Param("id") Long id);
 
 	@Query("SELECT p from Person p WHERE p.firstName LIKE LOWER(CONCAT ('%',:firstName,'%'))")
-	Page<Person> findPersonsByNames(@Param("firstName") String firstName);
+	Page<Person> findPersonsByName(@Param("firstName") String firstName, Pageable pageable);
 	
 }
