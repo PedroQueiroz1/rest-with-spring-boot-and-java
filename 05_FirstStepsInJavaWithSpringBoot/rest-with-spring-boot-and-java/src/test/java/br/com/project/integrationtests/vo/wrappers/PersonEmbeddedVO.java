@@ -12,32 +12,24 @@ public class PersonEmbeddedVO implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@JsonProperty("personVOList")
-	private List<PersonVO> embedded;
+	private List<PersonVO> persons;
 
 	
-	public PersonEmbeddedVO() {
+	public PersonEmbeddedVO() {}
+
+	public List<PersonVO> getPersons() {
+		return persons;
 	}
 
-
-	public PersonEmbeddedVO(List<PersonVO> embedded) {
-		this.embedded = embedded;
+	public void setPersons(List<PersonVO> persons) {
+		this.persons = persons;
 	}
-
-	
-	public List<PersonVO> getEmbedded() {
-		return embedded;
-	}
-
-	public void setEmbedded(List<PersonVO> embedded) {
-		this.embedded = embedded;
-	}
-
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((embedded == null) ? 0 : embedded.hashCode());
+		result = prime * result + ((persons == null) ? 0 : persons.hashCode());
 		return result;
 	}
 
@@ -50,14 +42,11 @@ public class PersonEmbeddedVO implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		PersonEmbeddedVO other = (PersonEmbeddedVO) obj;
-		if (embedded == null) {
-			if (other.embedded != null)
+		if (persons == null) {
+			if (other.persons != null)
 				return false;
-		} else if (!embedded.equals(other.embedded))
+		} else if (!persons.equals(other.persons))
 			return false;
 		return true;
 	}
-	
-	
-	
 }
