@@ -26,6 +26,8 @@ import br.com.project.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.project.integrationtests.vo.AccountCredentialsVO;
 import br.com.project.integrationtests.vo.BookVO;
 import br.com.project.integrationtests.vo.TokenVO;
+import br.com.project.integrationtests.vo.pagedmodels.PagedModelBook;
+import br.com.project.integrationtests.vo.pagedmodels.PagedModelPerson;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -184,17 +186,19 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
         var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
                     .queryParams("page", 0 , "limit", 5, "direction", "asc")
-                    .when()
-                    .get()
-                .then()
-                    .statusCode(200)
-                .extract()
-                    .body()
-                .asString();
+					.when()
+					.get()
+				.then()
+					.statusCode(200)
+						.extract()
+						.body()
+							.asString();
         
-        List<BookVO> books = objectMapper.readValue(content, new TypeReference<List<BookVO>>() {});
+		PagedModelBook wrapper = objectMapper.readValue(content, PagedModelBook.class);
+		var books = wrapper.getContent();      
 		
-        BookVO foundBookOne = books.get(0);
+		BookVO foundBookOne = books.get(0);
+		
         
         assertNotNull(foundBookOne.getId());
         assertNotNull(foundBookOne.getTitle());
