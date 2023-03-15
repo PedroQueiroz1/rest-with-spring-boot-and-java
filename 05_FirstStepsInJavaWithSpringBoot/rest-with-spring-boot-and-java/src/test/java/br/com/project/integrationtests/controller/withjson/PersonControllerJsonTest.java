@@ -23,6 +23,7 @@ import br.com.project.data.vo.v1.security.TokenVO;
 import br.com.project.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.project.integrationtests.vo.AccountCredentialsVO;
 import br.com.project.integrationtests.vo.PersonVO;
+import br.com.project.integrationtests.vo.pagedmodels.PagedModelPerson;
 import br.com.project.integrationtests.vo.wrappers.WrapperPersonVO;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -236,6 +237,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 		
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.queryParams("page", 3, "size", 10, "direction", "asc")
 					.when()
 					.get()
 				.then()
@@ -244,8 +246,8 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 						.body()
 							.asString();
 		
-		WrapperPersonVO wrapper = objectMapper.readValue(content, WrapperPersonVO.class);
-		var people = wrapper.getEmbedded().getPersons();
+		PagedModelPerson wrapper = objectMapper.readValue(content, PagedModelPerson.class);
+		var people = wrapper.getContent();
 		PersonVO foundPersonOne = people.get(0);
 		
 		assertTrue(foundPersonOne.getEnabled());
@@ -256,11 +258,11 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 		assertNotNull(foundPersonOne.getAddress());
 		assertNotNull(foundPersonOne.getGender());
 		
-		assertEquals(1, foundPersonOne.getId());
+		assertEquals(677, foundPersonOne.getId());
 		
-		assertEquals("Ayrton", foundPersonOne.getFirstName());
-		assertEquals("Senna", foundPersonOne.getLastName());
-		assertEquals("São Paulo", foundPersonOne.getAddress());
+		assertEquals("Alic", foundPersonOne.getFirstName());
+		assertEquals("Terbrug", foundPersonOne.getLastName());
+		assertEquals("3 Eagle Crest Court", foundPersonOne.getAddress());
 		assertEquals("Male", foundPersonOne.getGender());
 	
 		

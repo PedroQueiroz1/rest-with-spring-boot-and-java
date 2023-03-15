@@ -23,6 +23,7 @@ import br.com.project.data.vo.v1.security.TokenVO;
 import br.com.project.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.project.integrationtests.vo.AccountCredentialsVO;
 import br.com.project.integrationtests.vo.PersonVO;
+import br.com.project.integrationtests.vo.pagedmodels.PagedModelPerson;
 import br.com.project.integrationtests.vo.wrappers.WrapperPersonVO;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -256,8 +257,8 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
 						.body()
 							.asString();
 		
-		WrapperPersonVO wrapper = objectMapper.readValue(content, WrapperPersonVO.class);
-		var people = wrapper.getEmbedded().getPersons();
+		PagedModelPerson wrapper = objectMapper.readValue(content, PagedModelPerson.class);
+		var people = wrapper.getContent();
 		
 		PersonVO foundPersonOne = people.get(0);
 		
