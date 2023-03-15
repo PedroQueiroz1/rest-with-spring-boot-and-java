@@ -24,7 +24,6 @@ import br.com.project.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.project.integrationtests.vo.AccountCredentialsVO;
 import br.com.project.integrationtests.vo.PersonVO;
 import br.com.project.integrationtests.vo.pagedmodels.PagedModelPerson;
-import br.com.project.integrationtests.vo.wrappers.WrapperPersonVO;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
