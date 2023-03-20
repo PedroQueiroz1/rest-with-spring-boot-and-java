@@ -291,11 +291,53 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
 		assertEquals("Allegra", foundPersonSix.getFirstName());
 		assertEquals("Dome", foundPersonSix.getLastName());
 		assertEquals("57 Roxbury Pass", foundPersonSix.getAddress());
-		assertEquals("Female", foundPersonSix.getGender());	}
+		assertEquals("Female", foundPersonSix.getGender());	
+	}
 
 	
 	@Test
 	@Order(7)
+	public void testFindByName() throws JsonMappingException, JsonProcessingException {
+		
+		var content = given().spec(specification)
+				.contentType(TestConfigs.CONTENT_TYPE_XML)
+				.accept(TestConfigs.CONTENT_TYPE_XML)
+				.pathParam("firstName", "ayr")
+				.queryParams("page", 0, "size", 6, "direction", "asc")
+					.when()
+					.get("findPersonByName/{firstName}")
+				.then()
+					.statusCode(200)
+						.extract()
+						.body()
+							.asString();
+		
+		PagedModelPerson wrapper = objectMapper.readValue(content, PagedModelPerson.class);
+		var people = wrapper.getContent();
+		
+		PersonVO foundPersonOne = people.get(0);
+		
+		
+		assertNotNull(foundPersonOne.getId());
+		assertNotNull(foundPersonOne.getFirstName());
+		assertNotNull(foundPersonOne.getLastName());
+		assertNotNull(foundPersonOne.getAddress());
+		assertNotNull(foundPersonOne.getGender());
+		
+		assertTrue(foundPersonOne.getEnabled());
+
+		assertEquals(1, foundPersonOne.getId());
+		
+		assertEquals("Ayrton", foundPersonOne.getFirstName());
+		assertEquals("Senna", foundPersonOne.getLastName());
+		assertEquals("São Paulo", foundPersonOne.getAddress());
+		assertEquals("Male", foundPersonOne.getGender());
+	
+	}
+
+	
+	@Test
+	@Order(8)
 	public void testFindAllWithoutToken() throws JsonMappingException, JsonProcessingException {
 		
 		RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
@@ -313,6 +355,7 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
 			.then()
 				.statusCode(403);
 	}
+	
 	
 	private void mockPerson() {
 		person.setFirstName("Nelson");
