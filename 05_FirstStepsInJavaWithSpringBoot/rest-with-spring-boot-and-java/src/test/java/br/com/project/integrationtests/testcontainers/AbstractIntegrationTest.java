@@ -22,6 +22,8 @@ public class AbstractIntegrationTest {
 			Startables.deepStart(Stream.of(mysql)).join();
 		}
 		
+		
+		
 		private static Map<String, String> createConnectionConfiguration() {
 			// TODO Auto-generated method stub
 			return Map.of(
