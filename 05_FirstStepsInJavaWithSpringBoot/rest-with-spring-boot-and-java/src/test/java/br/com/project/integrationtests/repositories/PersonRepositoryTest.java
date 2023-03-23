@@ -1,6 +1,7 @@
 package br.com.project.integrationtests.repositories;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -70,4 +71,32 @@ public class PersonRepositoryTest extends AbstractIntegrationTest{
 		assertEquals("Male", person.getGender());
 	
 	}
+	
+	@Test
+	@Order(1)
+	public void testDisablePerson() throws JsonMappingException, JsonProcessingException {
+		
+		repository.disablePerson(person.getId());
+		
+		Pageable pageable = PageRequest.of(0, 6, Sort.by(Direction.ASC, "firstName"));
+		person = repository.findPersonsByName("ayr", pageable).getContent().get(0);
+		
+		assertNotNull(person);
+		
+		assertNotNull(person.getId());
+		assertNotNull(person.getFirstName());
+		assertNotNull(person.getLastName());
+		assertNotNull(person.getAddress());
+		assertNotNull(person.getGender());
+		
+		assertFalse(person.getEnabled());
+		
+		assertEquals(person.getId(), person.getId());
+		
+		assertEquals("Nelson", person.getFirstName());
+		assertEquals("Piquet Souto Maior", person.getLastName());
+		assertEquals("Brasília - DF - Brasil", person.getAddress());
+		assertEquals("Male", person.getGender());
+	}
+
 }
