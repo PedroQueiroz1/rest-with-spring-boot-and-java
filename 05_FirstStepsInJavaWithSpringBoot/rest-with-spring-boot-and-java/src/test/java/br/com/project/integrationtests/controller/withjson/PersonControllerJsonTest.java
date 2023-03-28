@@ -344,7 +344,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
-	@Order(6)
+	@Order(9)
 	public void testHateoas() throws JsonMappingException, JsonProcessingException {
 		
 		var content = given().spec(specification)
@@ -357,10 +357,6 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 						.extract()
 						.body()
 							.asString();
-		
-		PagedModelPerson wrapper = objectMapper.readValue(content, PagedModelPerson.class);
-		var people = wrapper.getContent();
-		PersonVO foundPersonOne = people.get(0);
 		
 		assertTrue(content.contains("\"_links\":{\"self\":{\"href\":\"http://localhost:8888/api/person/v1/677\"}}}"));
 		assertTrue(content.contains("\"_links\":{\"self\":{\"href\":\"http://localhost:8888/api/person/v1/846\"}}}"));
