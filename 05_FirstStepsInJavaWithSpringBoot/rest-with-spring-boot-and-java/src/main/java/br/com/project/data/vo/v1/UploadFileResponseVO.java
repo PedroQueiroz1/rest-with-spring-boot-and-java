@@ -1,4 +1,4 @@
-package br.com.project.data.vo;
+package br.com.project.data.vo.v1;
 
 import java.io.Serializable;
 
