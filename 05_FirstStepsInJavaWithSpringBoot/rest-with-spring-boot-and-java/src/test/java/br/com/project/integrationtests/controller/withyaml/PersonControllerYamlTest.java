@@ -377,7 +377,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 	
 	@Test
 	@Order(8)
-	public void testHateoas() throws JsonMappingException, JsonProcessingException {
+	public void testHATEOAS() throws JsonMappingException, JsonProcessingException {
 		
 		var content = given().spec(specification)
 				.config(

@@ -358,7 +358,7 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
 	
 	@Test
 	@Order(9)
-	public void testHateoas() throws JsonMappingException, JsonProcessingException {
+	public void testHATEOAS() throws JsonMappingException, JsonProcessingException {
 		
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_XML)
