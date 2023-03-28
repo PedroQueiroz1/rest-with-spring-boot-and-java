@@ -29,12 +29,9 @@ import br.com.project.integrationtests.vo.TokenVO;
 import br.com.project.integrationtests.vo.pagedmodels.PagedModelBook;
 import br.com.project.integrationtests.vo.pagedmodels.PagedModelPerson;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.config.EncoderConfig;
-import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
-import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -228,39 +225,27 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
 	@Order(7)
 	public void testHATEOAS() throws JsonMappingException, JsonProcessingException {
 		
-		var untreatedContent = given().spec(specification)
-				.config(
-						RestAssuredConfig
-							.config()
-							.encoderConfig(EncoderConfig.encoderConfig()
-								.encodeContentTypeAs(
-									TestConfigs.CONTENT_TYPE_YML,
-									ContentType.TEXT)))
-				.contentType(TestConfigs.CONTENT_TYPE_YML)
-				.accept(TestConfigs.CONTENT_TYPE_YML)
-				.queryParams("page", 3, "size", 10, "direction", "asc")
-					.when()
-					.get()
-				.then()
-					.statusCode(200)
-						.extract()
-						.body()
-						.asString();
+		var content = given().spec(specification)
+                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+            	.queryParams("page", 0 , "size", 12, "direction", "asc")
+                    .when()
+                    .get()
+                .then()
+                    .statusCode(200)
+                .extract()
+                    .body()
+                .asString();
 		
-		var content = untreatedContent.replace("\n", "").replace("\r", "");
+		assertTrue(content.contains("\"_links\":{\"self\":{\"href\":\"http://localhost:8888/api/book/v1/3\"}}}"));
+		assertTrue(content.contains("\"_links\":{\"self\":{\"href\":\"http://localhost:8888/api/book/v1/5\"}}}"));
+		assertTrue(content.contains("\"_links\":{\"self\":{\"href\":\"http://localhost:8888/api/book/v1/7\"}}}"));
 		
-		assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/677\""));
-		assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/846\""));
-		assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/714\""));
+		assertTrue(content.contains("{\"first\":{\"href\":\"http://localhost:8888/api/book/v1?direction=asc&page=0&size=12&sort=title,asc\"}"));
+		assertTrue(content.contains("\"self\":{\"href\":\"http://localhost:8888/api/book/v1?page=0&size=12&direction=asc\"}"));
+		assertTrue(content.contains("\"next\":{\"href\":\"http://localhost:8888/api/book/v1?direction=asc&page=1&size=12&sort=title,asc\"}"));
+		assertTrue(content.contains("\"last\":{\"href\":\"http://localhost:8888/api/book/v1?direction=asc&page=1&size=12&sort=title,asc\"}}"));
 		
-		assertTrue(content.contains("rel: \"first\"  href: \"http://localhost:8888/api/person/v1?direction=asc&page=0&size=10&sort=firstName,asc\""));
-		assertTrue(content.contains("rel: \"prev\"  href: \"http://localhost:8888/api/person/v1?direction=asc&page=2&size=10&sort=firstName,asc\""));
-		assertTrue(content.contains("rel: \"self\"  href: \"http://localhost:8888/api/person/v1?page=3&size=10&direction=asc\""));
-		assertTrue(content.contains("rel: \"next\"  href: \"http://localhost:8888/api/person/v1?direction=asc&page=4&size=10&sort=firstName,asc\""));
-		assertTrue(content.contains("rel: \"last\"  href: \"http://localhost:8888/api/person/v1?direction=asc&page=100&size=10&sort=firstName,asc\""));
-		
-		assertTrue(content.contains("page:  size: 10  totalElements: 1007  totalPages: 101  number: 3"));
-	
+		assertTrue(content.contains("\"page\":{\"size\":12,\"totalElements\":15,\"totalPages\":2,\"number\":0}}"));
 	}
      
     private void mockBook() {
