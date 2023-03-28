@@ -23,7 +23,6 @@ import br.com.project.integrationtests.vo.AccountCredentialsVO;
 import br.com.project.integrationtests.vo.PersonVO;
 import br.com.project.integrationtests.vo.TokenVO;
 import br.com.project.integrationtests.vo.pagedmodels.PagedModelPerson;
-import br.com.project.integrationtests.vo.wrappers.WrapperPersonVO;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.RestAssuredConfig;
