@@ -379,7 +379,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 	@Order(8)
 	public void testHATEOAS() throws JsonMappingException, JsonProcessingException {
 		
-		var content = given().spec(specification)
+		var untreatedContent = given().spec(specification)
 				.config(
 						RestAssuredConfig
 							.config()
@@ -397,6 +397,8 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 						.extract()
 						.body()
 						.asString();
+		
+		var content = untreatedContent.replace("\n", "").replace("\r", "");
 		
 		assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/677\""));
 		assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/846\""));
