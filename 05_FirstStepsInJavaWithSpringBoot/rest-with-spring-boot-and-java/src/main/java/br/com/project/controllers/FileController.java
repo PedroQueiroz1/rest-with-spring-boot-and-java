@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.project.data.vo.v1.UploadFileResponseVO;
 import br.com.project.services.FileStorageService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -35,6 +36,8 @@ public class FileController {
 	private FileStorageService service;
 	
 	@PostMapping("/uploadFile")
+	@Operation(summary = "Upload a specific file", description = "Upload a specific file",
+	tags = "File")
 	public UploadFileResponseVO uploadFile(@RequestParam("file") MultipartFile file) {
 		logger.info("Storing file to disk");
 		
@@ -48,6 +51,8 @@ public class FileController {
 	}
 	
 	@PostMapping("/uploadMultipleFiles")
+	@Operation(summary = "Upload multiples files", description = "Upload multiples files",
+	tags = "File")
 	public List<UploadFileResponseVO> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
 		logger.info("Storing file to disk");
 		
@@ -58,6 +63,8 @@ public class FileController {
 	}
 	
 	@GetMapping("/downloadFile/{filename:.+}")
+	@Operation(summary = "Download a specific file", description = "Download a specific file",
+	tags = "File")
 	public ResponseEntity<Resource> downloadFile(
 			@PathVariable String filename, HttpServletRequest request) {
 				
