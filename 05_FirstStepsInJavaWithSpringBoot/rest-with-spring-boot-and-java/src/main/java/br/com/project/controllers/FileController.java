@@ -36,8 +36,7 @@ public class FileController {
 	private FileStorageService service;
 	
 	@PostMapping("/uploadFile")
-	@Operation(summary = "Upload a specific file", description = "Upload a specific file",
-	tags = "File")
+	@Operation(summary = "Upload a specific file", description = "Upload a specific file")
 	public UploadFileResponseVO uploadFile(@RequestParam("file") MultipartFile file) {
 		logger.info("Storing file to disk");
 		
@@ -51,8 +50,7 @@ public class FileController {
 	}
 	
 	@PostMapping("/uploadMultipleFiles")
-	@Operation(summary = "Upload multiples files", description = "Upload multiples files",
-	tags = "File")
+	@Operation(summary = "Upload multiples files", description = "Upload multiples files")
 	public List<UploadFileResponseVO> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
 		logger.info("Storing file to disk");
 		
@@ -63,8 +61,7 @@ public class FileController {
 	}
 	
 	@GetMapping("/downloadFile/{filename:.+}")
-	@Operation(summary = "Download a specific file", description = "Download a specific file",
-	tags = "File")
+	@Operation(summary = "Download a specific file", description = "Download a specific file")
 	public ResponseEntity<Resource> downloadFile(
 			@PathVariable String filename, HttpServletRequest request) {
 				
