@@ -1,5 +1,7 @@
 package br.com.project.controllers;
 
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +38,8 @@ public class BookController {
 	@Autowired
 	private BookService service;
 	
+	private Logger logger = Logger.getLogger(BookController.class.getName()); 
+	
 	//GET MAPPING
 	@GetMapping(
 		produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
@@ -60,6 +64,8 @@ public class BookController {
 			@RequestParam(value = "size", defaultValue = "12") Integer size,
 			@RequestParam(value = "direction", defaultValue = "asc") String direction){
 			
+		logger.info("Finding all books");
+		
 		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC; 
 		
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "title"));
@@ -83,6 +89,8 @@ public class BookController {
 		}
 	)
 	public BookVO findById(@PathVariable(value = "id") Long id) {
+		logger.info("Finding a book");
+		
 		return service.findById(id);
 	}
 	
@@ -102,6 +110,8 @@ public class BookController {
 		}
 	)
 	public BookVO create(@RequestBody BookVO book) {
+		logger.info("Creating a book");
+	
 		return service.create(book);
 	}
 	
@@ -122,6 +132,8 @@ public class BookController {
 		}
 	)
 	public BookVO update(@RequestBody BookVO book) {
+		logger.info("Updating a book");
+		
 		return service.update(book);
 	}
 	
@@ -139,6 +151,8 @@ public class BookController {
 		}
 	)
 	public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
+		logger.info("Deleting a book");
+		
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
