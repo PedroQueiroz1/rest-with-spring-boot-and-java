@@ -25,9 +25,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
-@Tag(name = "File Endpoint")
 @RestController
 @RequestMapping("/api/file/v1")
+@Tag(name = "File Endpoint", description = "Endpoint for managing files")
 public class FileController {
 
 	private Logger logger = Logger.getLogger(FileController.class.getName());
