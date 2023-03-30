@@ -35,10 +35,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Book", description = "Endpoints for Managing Book")
 public class BookController {
 	
-	@Autowired
-	private BookService service;
+	private Logger logger = Logger.getLogger(BookController.class.getName());
 	
-	private Logger logger = Logger.getLogger(BookController.class.getName()); 
+	@Autowired
+	private BookService service; 
 	
 	//GET MAPPING
 	@GetMapping(
