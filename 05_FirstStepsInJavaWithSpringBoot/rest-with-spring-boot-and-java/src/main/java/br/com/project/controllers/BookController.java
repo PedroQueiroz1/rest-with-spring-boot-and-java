@@ -40,9 +40,10 @@ public class BookController {
 	@Autowired
 	private BookService service; 
 	
+	
 	//GET MAPPING
 	@GetMapping(
-		produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
+		produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
 	@Operation(summary = "Finds all Books", description = "Finds all Books",
 		tags = {"Book"},
 		responses = {
@@ -62,8 +63,8 @@ public class BookController {
 	public ResponseEntity<PagedModel<EntityModel<BookVO>>> findAll(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "size", defaultValue = "12") Integer size,
-			@RequestParam(value = "direction", defaultValue = "asc") String direction){
-			
+			@RequestParam(value = "direction", defaultValue = "asc") String direction)
+	{
 		logger.info("Finding all books");
 		
 		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC; 
@@ -73,6 +74,8 @@ public class BookController {
 		return ResponseEntity.ok(service.findAll(pageable));
 	}
 	
+	
+	//GET MAPPING
 	@GetMapping(value = "/{id}",
 		produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML  })
 	@Operation(summary = "Finds a Book", description = "Finds a Book",
@@ -88,12 +91,15 @@ public class BookController {
 			@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
 		}
 	)
-	public BookVO findById(@PathVariable(value = "id") Long id) {
+	public BookVO findById(@PathVariable(value = "id") Long id) 
+	{
 		logger.info("Finding a book");
 		
 		return service.findById(id);
 	}
 	
+	
+	//POST MAPPING
 	@PostMapping(
 		consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML  },
 		produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML  })
@@ -115,6 +121,8 @@ public class BookController {
 		return service.create(book);
 	}
 	
+	
+	//PUT MAPPING
 	@PutMapping(
 		consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML  },
 		produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML  })
@@ -138,6 +146,7 @@ public class BookController {
 	}
 	
 	
+	//DELETE MAPPING
 	@DeleteMapping(value = "/{id}")
 	@Operation(summary = "Deletes a Book",
 		description = "Deletes a Book by passing in a JSON, XML or YML representation of the book!",
