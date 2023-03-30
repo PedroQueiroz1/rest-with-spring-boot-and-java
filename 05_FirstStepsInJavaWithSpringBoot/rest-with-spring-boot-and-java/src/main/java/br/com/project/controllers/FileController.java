@@ -27,7 +27,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/file/v1")
-@Tag(name = "File", description = "Endpoint for managing files")
+@Tag(name = "File", description = "Endpoints for managing files")
 public class FileController {
 
 	private Logger logger = Logger.getLogger(FileController.class.getName());
@@ -35,6 +35,8 @@ public class FileController {
 	@Autowired
 	private FileStorageService service;
 	
+	
+	//POST MAPPING
 	@PostMapping("/uploadFile")
 	@Operation(summary = "Upload a specific file", description = "Upload a specific file")
 	public UploadFileResponseVO uploadFile(@RequestParam("file") MultipartFile file) {
@@ -49,6 +51,8 @@ public class FileController {
 				fileName, fileDownloadUri, file.getContentType(), file.getSize());
 	}
 	
+	
+	//POST MAPPING
 	@PostMapping("/uploadMultipleFiles")
 	@Operation(summary = "Upload multiples files", description = "Upload multiples files")
 	public List<UploadFileResponseVO> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
@@ -60,11 +64,12 @@ public class FileController {
 				.collect(Collectors.toList());
 	}
 	
+	
+	//GET MAPPING
 	@GetMapping("/downloadFile/{filename:.+}")
 	@Operation(summary = "Download a specific file", description = "Download a specific file")
 	public ResponseEntity<Resource> downloadFile(
 			@PathVariable String filename, HttpServletRequest request) {
-				
 		logger.info("Reading file to disk");
 		
 		Resource resource = service.loadFileASResource(filename);
