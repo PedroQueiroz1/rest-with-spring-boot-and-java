@@ -1,5 +1,6 @@
 package br.com.project.controllers;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "People", description = "Endpoints for Managing People")
 public class PersonController {
 
+	private Logger logger = Logger.getLogger(PersonController.class.getName());
+	
 	@Autowired
 	private PersonService personService;
 
@@ -64,15 +67,17 @@ public class PersonController {
 			@RequestParam(value = "size", defaultValue = "12") Integer size,
 			@RequestParam(value = "direction", defaultValue = "asc") String direction) 
 	{		
+		logger.info("Finding all people");
 		
 		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
 		
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "firstName"));
 		return ResponseEntity.ok(personService.findAll(pageable));
 	}
+	
 
 	//GET MAPPING
-	@GetMapping(value = "/findPersonsByName/{firstName}",
+	@GetMapping(value = "/findPeopleByName/{firstName}",
 			produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
 	@Operation(summary = "Find people by name", description = "Find people by name",
 	tags = {"People"},
@@ -95,13 +100,15 @@ public class PersonController {
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "size", defaultValue = "12") Integer size,
 			@RequestParam(value = "direction", defaultValue = "asc") String direction) 
-	{		
+	{			
+		logger.info("Finding people by name");
 		
 		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
 		
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "firstName"));
 		return ResponseEntity.ok(personService.findPersonsByName("",pageable));
 	}
+	
 	
 	//GET MAPPING
 	@CrossOrigin(origins = "http://localhost:8080")
@@ -120,9 +127,12 @@ public class PersonController {
 	}
 )
 	public PersonVO findById(@PathVariable(value = "id") Long id) {
+		logger.info("Finding person by id");
+		
 		return personService.findById(id);
 	}
 
+	
 	// POST MAPPING
 	@CrossOrigin(origins = {"http://localhost:8080", "https://project.com.br"})
 	@PostMapping(consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
@@ -140,8 +150,11 @@ public class PersonController {
 	}
 )
 	public PersonVO create(@RequestBody PersonVO person) {
+		logger.info("Adding new person to database");
+		
 		return personService.create(person);
 	}
+	
 
 	//PUT MAPPING
 	@PutMapping(consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
@@ -160,8 +173,11 @@ public class PersonController {
 	}
 )
 	public PersonVO update(@RequestBody PersonVO person) {
+		logger.info("Updating a person");
+		
 		return personService.update(person);
 	}
+	
 	
 	// PATCH
 	@PatchMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
@@ -179,8 +195,11 @@ public class PersonController {
 	}
 )
 	public PersonVO disablePerson(@PathVariable(value = "id") Long id) {
+		logger.info("Disabling a person");
+		
 		return personService.disablePerson(id);
 	}
+	
 	
 	// DELETE
 	@DeleteMapping(value = "/{id}")
@@ -196,6 +215,8 @@ public class PersonController {
 	}
 )
 	public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
+		logger.info("Deleting a person");
+		
 		personService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
