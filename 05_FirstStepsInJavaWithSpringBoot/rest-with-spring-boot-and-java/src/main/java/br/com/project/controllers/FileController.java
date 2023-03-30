@@ -27,7 +27,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/file/v1")
-@Tag(name = "File Endpoint", description = "Endpoint for managing files")
+@Tag(name = "File", description = "Endpoint for managing files")
 public class FileController {
 
 	private Logger logger = Logger.getLogger(FileController.class.getName());
