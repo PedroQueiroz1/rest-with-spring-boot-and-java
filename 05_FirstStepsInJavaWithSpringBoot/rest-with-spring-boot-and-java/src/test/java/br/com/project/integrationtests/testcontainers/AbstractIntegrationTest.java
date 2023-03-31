@@ -21,16 +21,13 @@ public class AbstractIntegrationTest {
 		private static void startContainers() {
 			Startables.deepStart(Stream.of(mysql)).join();
 		}
-		
-		
-		
+
 		private static Map<String, String> createConnectionConfiguration() {
-			// TODO Auto-generated method stub
 			return Map.of(
-					"spring.datasource.url", mysql.getJdbcUrl(),
-					"spring.datasource.username", mysql.getUsername(),
-					"spring.datasource.password", mysql.getPassword()
-					);
+				"spring.datasource.url", mysql.getJdbcUrl(),
+				"spring.datasource.username", mysql.getUsername(),
+				"spring.datasource.password", mysql.getPassword()
+			);
 		}
 		
 		@SuppressWarnings({"unchecked", "rawtypes"})
@@ -38,12 +35,10 @@ public class AbstractIntegrationTest {
 		public void initialize(ConfigurableApplicationContext applicationContext) {
 			startContainers();
 			ConfigurableEnvironment environment = applicationContext.getEnvironment();
-			MapPropertySource testContainers = new MapPropertySource(
-					"testContainers", 
-					(Map) createConnectionConfiguration());
-			environment.getPropertySources().addFirst(testContainers);
+			MapPropertySource testcontainers = new MapPropertySource(
+				"testcontainers",
+				(Map) createConnectionConfiguration());
+			environment.getPropertySources().addFirst(testcontainers);
 		}
-
 	}
-
 }
