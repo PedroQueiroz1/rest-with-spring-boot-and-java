@@ -25,6 +25,7 @@ import br.com.project.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.project.integrationtests.vo.AccountCredentialsVO;
 import br.com.project.integrationtests.vo.BookVO;
 import br.com.project.integrationtests.vo.TokenVO;
+import br.com.project.integrationtests.vo.pagedmodels.PagedModelBook;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -77,7 +78,7 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
                     .body()
                         .as(TokenVO.class, objectMapper)
                     .getAccessToken();
-
+        
             specification =
                 new RequestSpecBuilder()
                     .addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + token)
@@ -210,24 +211,26 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
     @Order(6)
     public void testFindAll() throws JsonMappingException, JsonProcessingException {
         var response = given()
-                    .config(
-                        RestAssuredConfig
-                            .config()
-                            .encoderConfig(EncoderConfig.encoderConfig()
-                                    .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)))
-                    .spec(specification)
-                .contentType(TestConfigs.CONTENT_TYPE_YML)
-				.accept(TestConfigs.CONTENT_TYPE_YML)
-                    .when()
-                    .get()
-                .then()
-                    .statusCode(200)
-                        .extract()
-                        .body()
-                        .as(BookVO[].class, objectMapper); 
+                .config(
+                    RestAssuredConfig
+                        .config()
+                        .encoderConfig(EncoderConfig.encoderConfig()
+                                .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)))
+                .spec(specification)
+            .contentType(TestConfigs.CONTENT_TYPE_YML)
+			.accept(TestConfigs.CONTENT_TYPE_YML)
+        	.queryParams("page", 0 , "limit", 12, "direction", "asc")
+                .when()
+                .get()
+            .then()
+                .statusCode(200)
+                    .extract()
+                    .body()
+                	.as(PagedModelBook.class, objectMapper); 
 
 
-        List<BookVO> content = Arrays.asList(response);
+
+        List<BookVO> content = response.getContent();
 
         BookVO foundBookOne = content.get(0);
         
@@ -236,9 +239,9 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
         assertNotNull(foundBookOne.getAuthor());
         assertNotNull(foundBookOne.getPrice());
         assertTrue(foundBookOne.getId() > 0);
-        assertEquals("Working effectively with legacy code", foundBookOne.getTitle());
-        assertEquals("Michael C. Feathers", foundBookOne.getAuthor());
-        assertEquals(49.00, foundBookOne.getPrice());
+        assertEquals("Big Data: como extrair volume, variedade, velocidade e valor da avalanche de informação cotidiana", foundBookOne.getTitle());
+        assertEquals("Viktor Mayer-Schonberger e Kenneth Kukier", foundBookOne.getAuthor());
+        assertEquals(54.00, foundBookOne.getPrice());
         
         BookVO foundBookFive = content.get(4);
         
@@ -247,9 +250,9 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
         assertNotNull(foundBookFive.getAuthor());
         assertNotNull(foundBookFive.getPrice());
         assertTrue(foundBookFive.getId() > 0);
-        assertEquals("Code complete", foundBookFive.getTitle());
-        assertEquals("Steve McConnell", foundBookFive.getAuthor());
-        assertEquals(58.0, foundBookFive.getPrice());
+        assertEquals("Domain Driven Design", foundBookFive.getTitle());
+        assertEquals("Eric Evans", foundBookFive.getAuthor());
+        assertEquals(92.00, foundBookFive.getPrice());
     }
     
 	@Test
@@ -257,23 +260,21 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
 	public void testHATEOAS() throws JsonMappingException, JsonProcessingException {
 		
 		var untreatedContent = given()
-				.config(
-						RestAssuredConfig
-							.config()
-							.encoderConfig(EncoderConfig.encoderConfig()
-								.encodeContentTypeAs(
-									TestConfigs.CONTENT_TYPE_YML,
-									ContentType.TEXT)))
-					.spec(specification)
-				.contentType(TestConfigs.CONTENT_TYPE_YML)
+                    .config(
+                        RestAssuredConfig
+                            .config()
+                            .encoderConfig(EncoderConfig.encoderConfig()
+                                    .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)))
+                    .spec(specification)
+                .contentType(TestConfigs.CONTENT_TYPE_YML)
 				.accept(TestConfigs.CONTENT_TYPE_YML)
-				.queryParams("page", 3, "size", 10, "direction", "asc")
-					.when()
-					.get()
-				.then()
-					.statusCode(200)
-						.extract()
-						.body()
+            	.queryParams("page", 0 , "size", 12, "direction", "asc")
+                    .when()
+                    .get()
+                .then()
+                    .statusCode(200)
+                .extract()
+                    .body()
 						.asString();
 		
 		var content = untreatedContent.replace("\n", "").replace("\r", "");
