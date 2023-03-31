@@ -1,6 +1,9 @@
 package br.com.project.services;
 
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +12,6 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.stereotype.Service;
 
 import br.com.project.controllers.BookController;
@@ -19,7 +19,6 @@ import br.com.project.data.vo.v1.BookVO;
 import br.com.project.exceptions.RequiredObjectIsNullException;
 import br.com.project.exceptions.ResourceNotFoundException;
 import br.com.project.mapper.DozerMapper;
-import br.com.project.mapper.custom.BookMapper;
 import br.com.project.model.Book;
 import br.com.project.repositories.BookRepository;
 
@@ -34,9 +33,6 @@ public class BookService {
 	@Autowired
 	PagedResourcesAssembler<BookVO> assembler;
 	
-	@Autowired
-	BookMapper mapper;
-
 	// --------- FIND-ALL ------------
 	public PagedModel<EntityModel<BookVO>> findAll(Pageable pageable) {
 
