@@ -14,22 +14,15 @@ public class WrapperPersonVO implements Serializable{
 	@JsonProperty("_embedded")
 	private PersonEmbeddedVO embedded;
 
-	
 	public WrapperPersonVO() {}
-
-	public WrapperPersonVO(PersonEmbeddedVO embedded) {
-		this.embedded = embedded;
-	}
-	
 
 	public PersonEmbeddedVO getEmbedded() {
 		return embedded;
 	}
-
+	
 	public void setEmbedded(PersonEmbeddedVO embedded) {
 		this.embedded = embedded;
 	}
-
 	
 	@Override
 	public int hashCode() {
