@@ -27,7 +27,7 @@ spring:
       max-request-size: 215MB
 springdoc:
   pathsToMatch: 
-  - /auth/**
-  - /api/**/v1/**
+    - /auth/**
+    - /api/**/v1/**
   swagger-ui:
     use-root-path: true
