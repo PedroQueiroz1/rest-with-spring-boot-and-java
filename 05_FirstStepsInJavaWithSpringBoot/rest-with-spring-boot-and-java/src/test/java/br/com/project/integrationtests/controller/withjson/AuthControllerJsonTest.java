@@ -30,7 +30,7 @@ public class AuthControllerJsonTest extends AbstractIntegrationTest {
 	public void testSignin() throws JsonMappingException, JsonProcessingException {
 		
 		AccountCredentialsVO user = 
-				new AccountCredentialsVO("root", "admin123");
+				new AccountCredentialsVO("leandro", "admin123");
 		
 		tokenVO = given()
 				.basePath("/auth/signin")
