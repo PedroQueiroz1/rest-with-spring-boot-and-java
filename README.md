@@ -1,6 +1,6 @@
 # Rest-With-Spring-Boot-and-Java
 
-A project to learn more about Springboot, Docker and AWS.
+A project to learn more about Springboot, Docker and AWS. 
 
 ## Description
 It is a project created to get more in depth in Java and to stay updated with new contents and frameworks.
@@ -12,4 +12,4 @@ I'm studying a little more to stay updated with the new contents, etc.
 
 [![Docker Hub Repo](https://img.shields.io/docker/pulls/pedroqueiroz1/rest-with-spring-boot.svg)](https://hub.docker.com/repository/docker/pedroqueiroz1/rest-with-spring-boot)
 
-*I did something that I didn't understand so I had to commit everything again...
+*And I'm doing some experiments with this project so it has a lot o bugs! BUGS = FUN
