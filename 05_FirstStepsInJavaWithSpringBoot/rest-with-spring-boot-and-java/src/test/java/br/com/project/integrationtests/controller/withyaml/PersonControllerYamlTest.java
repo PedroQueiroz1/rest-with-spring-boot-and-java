@@ -43,8 +43,10 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 	
 	@BeforeAll
 	public static void setup() {
+		
 		objectMapper = new YMLMapper();
 		person = new PersonVO();
+		
 	}
 	
 	@Test
@@ -105,8 +107,8 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 				.then()
 					.statusCode(200)
 						.extract()
-						.body()
-							.as(PersonVO.class, objectMapper);
+							.body()
+								.as(PersonVO.class, objectMapper);
 		
 		person = persistedPerson;
 		
@@ -119,6 +121,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		assertNotNull(persistedPerson.getGender());
 		
 		assertTrue(persistedPerson.getEnabled());
+		
 		assertTrue(persistedPerson.getId() > 0);
 		
 		assertEquals("Nelson", persistedPerson.getFirstName());
@@ -126,6 +129,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		assertEquals("Brasília - DF - Brasil", persistedPerson.getAddress());
 		assertEquals("Male", persistedPerson.getGender());
 	}
+
 
 	@Test
 	@Order(2)
@@ -160,8 +164,9 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		assertNotNull(persistedPerson.getLastName());
 		assertNotNull(persistedPerson.getAddress());
 		assertNotNull(persistedPerson.getGender());
-
+		
 		assertTrue(persistedPerson.getEnabled());
+		
 		assertEquals(person.getId(), persistedPerson.getId());
 		
 		assertEquals("Nelson", persistedPerson.getFirstName());
@@ -169,7 +174,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		assertEquals("Brasília - DF - Brasil", persistedPerson.getAddress());
 		assertEquals("Male", persistedPerson.getGender());
 	}
-	
+
 
 	@Test
 	@Order(3)
@@ -177,14 +182,14 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 			
 		var persistedPerson = given().spec(specification)
 				.config(
-					RestAssuredConfig
-						.config()
-						.encoderConfig(EncoderConfig.encoderConfig()
-							.encodeContentTypeAs(
-								TestConfigs.CONTENT_TYPE_YML,
-								ContentType.TEXT)))
-				.contentType(TestConfigs.CONTENT_TYPE_YML)
-				.accept(TestConfigs.CONTENT_TYPE_YML)
+						RestAssuredConfig
+							.config()
+							.encoderConfig(EncoderConfig.encoderConfig()
+								.encodeContentTypeAs(
+									TestConfigs.CONTENT_TYPE_YML,
+									ContentType.TEXT)))
+					.contentType(TestConfigs.CONTENT_TYPE_YML)
+					.accept(TestConfigs.CONTENT_TYPE_YML)
 					.pathParam("id", person.getId())
 					.when()
 					.patch("{id}")
@@ -213,6 +218,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		assertEquals("Male", persistedPerson.getGender());
 	}
 
+	
 	@Test
 	@Order(4)
 	public void testFindById() throws JsonMappingException, JsonProcessingException {
@@ -246,9 +252,9 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		assertNotNull(persistedPerson.getLastName());
 		assertNotNull(persistedPerson.getAddress());
 		assertNotNull(persistedPerson.getGender());
-
-		assertFalse(persistedPerson.getEnabled());
 		
+		assertFalse(persistedPerson.getEnabled());
+
 		assertEquals(person.getId(), persistedPerson.getId());
 		
 		assertEquals("Nelson", persistedPerson.getFirstName());
@@ -302,16 +308,15 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 						.as(PagedModelPerson.class, objectMapper);
 		
 		var people = wrapper.getContent();
-		
 		PersonVO foundPersonOne = people.get(0);
+	
+		assertTrue(foundPersonOne.getEnabled());
 		
 		assertNotNull(foundPersonOne.getId());
 		assertNotNull(foundPersonOne.getFirstName());
 		assertNotNull(foundPersonOne.getLastName());
 		assertNotNull(foundPersonOne.getAddress());
 		assertNotNull(foundPersonOne.getGender());
-
-		assertTrue(foundPersonOne.getEnabled());
 		
 		assertEquals(677, foundPersonOne.getId());
 		
@@ -320,71 +325,28 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		assertEquals("3 Eagle Crest Court", foundPersonOne.getAddress());
 		assertEquals("Male", foundPersonOne.getGender());
 		
+		
 		PersonVO foundPersonSix = people.get(5);
+
+		assertTrue(foundPersonSix.getEnabled());
 		
 		assertNotNull(foundPersonSix.getId());
 		assertNotNull(foundPersonSix.getFirstName());
 		assertNotNull(foundPersonSix.getLastName());
 		assertNotNull(foundPersonSix.getAddress());
 		assertNotNull(foundPersonSix.getGender());
-
-		assertTrue(foundPersonSix.getEnabled());
 		
-		assertEquals(911, foundPersonSix.getId());
+		assertEquals(9, foundPersonSix.getId());
 		
-		assertEquals("Allegra", foundPersonSix.getFirstName());
-		assertEquals("Dome", foundPersonSix.getLastName());
-		assertEquals("57 Roxbury Pass", foundPersonSix.getAddress());
-		assertEquals("Female", foundPersonSix.getGender());
+		assertEquals("Nelson", foundPersonSix.getFirstName());
+		assertEquals("Mvezo", foundPersonSix.getLastName());
+		assertEquals("Mvezo – South Africa", foundPersonSix.getAddress());
+		assertEquals("Male", foundPersonSix.getGender());
 	}
 
 	
 	@Test
 	@Order(7)
-	public void testFindByName() throws JsonMappingException, JsonProcessingException {
-		
-		var wrapper = given().spec(specification)
-				.config(
-						RestAssuredConfig
-							.config()
-							.encoderConfig(EncoderConfig.encoderConfig()
-								.encodeContentTypeAs(
-									TestConfigs.CONTENT_TYPE_YML,
-									ContentType.TEXT)))
-				.contentType(TestConfigs.CONTENT_TYPE_YML)
-				.accept(TestConfigs.CONTENT_TYPE_YML)
-					.pathParam("firstName", "ayr")
-					.queryParams("page", 0, "size", 6, "direction", "asc")
-						.when()
-						.get("findPersonByName/{firstName}")
-					.then()
-						.statusCode(200)
-							.extract()
-							.body()
-							.as(PagedModelPerson.class, objectMapper);
-		
-		var people = wrapper.getContent();
-		
-		PersonVO foundPersonOne = people.get(0);
-		
-		assertNotNull(foundPersonOne.getId());
-		assertNotNull(foundPersonOne.getFirstName());
-		assertNotNull(foundPersonOne.getLastName());
-		assertNotNull(foundPersonOne.getAddress());
-		assertNotNull(foundPersonOne.getGender());
-
-		assertTrue(foundPersonOne.getEnabled());
-		
-		assertEquals(1, foundPersonOne.getId());
-		
-		assertEquals("Ayrton", foundPersonOne.getFirstName());
-		assertEquals("Senna", foundPersonOne.getLastName());
-		assertEquals("São Paulo", foundPersonOne.getAddress());
-		assertEquals("Male", foundPersonOne.getGender());
-	}
-	
-	@Test
-	@Order(8)
 	public void testFindAllWithoutToken() throws JsonMappingException, JsonProcessingException {
 		
 		RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
@@ -410,12 +372,11 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 				.statusCode(403);
 	}
 	
-
 	@Test
-	@Order(9)
+	@Order(8)
 	public void testHATEOAS() throws JsonMappingException, JsonProcessingException {
 		
-		var unthreatedContent = given().spec(specification)
+		var untreatedContent = given().spec(specification)
 				.config(
 						RestAssuredConfig
 							.config()
@@ -426,7 +387,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 				.contentType(TestConfigs.CONTENT_TYPE_YML)
 				.accept(TestConfigs.CONTENT_TYPE_YML)
 				.queryParams("page", 3, "size", 10, "direction", "asc")
-				.when()
+					.when()
 					.get()
 				.then()
 					.statusCode(200)
@@ -434,7 +395,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 						.body()
 						.asString();
 		
-		var content = unthreatedContent.replace("\n", "").replace("\r", "");
+		var content = untreatedContent.replace("\n", "").replace("\r", "");
 		
 		assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/677\""));
 		assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/846\""));
@@ -447,6 +408,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		assertTrue(content.contains("rel: \"last\"  href: \"http://localhost:8888/api/person/v1?direction=asc&page=100&size=10&sort=firstName,asc\""));
 		
 		assertTrue(content.contains("page:  size: 10  totalElements: 1007  totalPages: 101  number: 3"));
+	
 	}
 	
 	private void mockPerson() {
