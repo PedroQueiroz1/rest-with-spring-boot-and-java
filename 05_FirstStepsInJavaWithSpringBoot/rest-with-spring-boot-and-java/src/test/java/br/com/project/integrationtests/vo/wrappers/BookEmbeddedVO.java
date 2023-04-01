@@ -15,7 +15,7 @@ public class BookEmbeddedVO implements Serializable{
 	private List<BookVO> books;
 	
 
-	public BookEmbeddedVO(List<BookVO> books) {}
+	public BookEmbeddedVO() {}
 
 	
 	public List<BookVO> getBooks() {
