@@ -6,7 +6,7 @@ import br.com.project.integrationtests.vo.PersonVO;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@XmlRootElement(name="Group")
 public class PagedModelPerson {
 
 	@XmlElement(name = "content")
