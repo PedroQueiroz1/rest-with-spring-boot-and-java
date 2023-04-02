@@ -1,7 +1,5 @@
 package br.com.project.controllers;
 
-import java.util.logging.Logger;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,16 +33,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Book", description = "Endpoints for Managing Book")
 public class BookController {
 	
-	private Logger logger = Logger.getLogger(BookController.class.getName());
-	
 	@Autowired
-	private BookService service; 
+	private BookService service;
 	
-	
-	//GET MAPPING
 	@GetMapping(
-		produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
-	@Operation(summary = "Finds all Books", description = "Finds all Books",
+		produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
+	@Operation(summary = "Finds all Book", description = "Finds all Book",
 		tags = {"Book"},
 		responses = {
 			@ApiResponse(description = "Success", responseCode = "200",
@@ -62,20 +56,16 @@ public class BookController {
 	)
 	public ResponseEntity<PagedModel<EntityModel<BookVO>>> findAll(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			@RequestParam(value = "size", defaultValue = "12") Integer size,
-			@RequestParam(value = "direction", defaultValue = "asc") String direction)
-	{
-		logger.info("Finding all books");
-		
-		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC; 
-		
+	        @RequestParam(value = "size", defaultValue = "12") Integer size,
+	        @RequestParam(value = "direction", defaultValue = "asc") String direction
+	) {
+		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
+	    
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "title"));
-		
 		return ResponseEntity.ok(service.findAll(pageable));
 	}
+
 	
-	
-	//GET MAPPING
 	@GetMapping(value = "/{id}",
 		produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML  })
 	@Operation(summary = "Finds a Book", description = "Finds a Book",
@@ -91,15 +81,10 @@ public class BookController {
 			@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
 		}
 	)
-	public BookVO findById(@PathVariable(value = "id") Long id) 
-	{
-		logger.info("Finding a book");
-		
+	public BookVO findById(@PathVariable(value = "id") Long id) {
 		return service.findById(id);
 	}
 	
-	
-	//POST MAPPING
 	@PostMapping(
 		consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML  },
 		produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML  })
@@ -116,13 +101,9 @@ public class BookController {
 		}
 	)
 	public BookVO create(@RequestBody BookVO book) {
-		logger.info("Creating a book");
-	
 		return service.create(book);
 	}
 	
-	
-	//PUT MAPPING
 	@PutMapping(
 		consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML  },
 		produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML  })
@@ -140,13 +121,10 @@ public class BookController {
 		}
 	)
 	public BookVO update(@RequestBody BookVO book) {
-		logger.info("Updating a book");
-		
 		return service.update(book);
 	}
 	
 	
-	//DELETE MAPPING
 	@DeleteMapping(value = "/{id}")
 	@Operation(summary = "Deletes a Book",
 		description = "Deletes a Book by passing in a JSON, XML or YML representation of the book!",
@@ -160,8 +138,6 @@ public class BookController {
 		}
 	)
 	public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
-		logger.info("Deleting a book");
-		
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}

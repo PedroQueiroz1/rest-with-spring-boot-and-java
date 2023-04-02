@@ -21,58 +21,53 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.project.data.vo.v1.UploadFileResponseVO;
 import br.com.project.services.FileStorageService;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
+@Tag(name = "File Endpoint")
 @RestController
 @RequestMapping("/api/file/v1")
-@Tag(name = "File", description = "Endpoints for managing files")
 public class FileController {
-
+	
 	private Logger logger = Logger.getLogger(FileController.class.getName());
 	
 	@Autowired
 	private FileStorageService service;
 	
-	
-	//POST MAPPING
 	@PostMapping("/uploadFile")
-	@Operation(summary = "Upload a specific file", description = "Upload a specific file")
 	public UploadFileResponseVO uploadFile(@RequestParam("file") MultipartFile file) {
 		logger.info("Storing file to disk");
 		
-		var fileName = service.storeFile(file);
+		var filename = service.storeFile(file);
 		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-				.path("/api/file/v1/downloadFile/")
-				.path(fileName)
-				.toUriString();
-		return new UploadFileResponseVO(
-				fileName, fileDownloadUri, file.getContentType(), file.getSize());
+			.path("/api/file/v1/downloadFile/")
+			.path(filename)
+			.toUriString();
+		
+		return
+			new UploadFileResponseVO(
+				filename, fileDownloadUri, file.getContentType(), file.getSize());
 	}
 	
-	
-	//POST MAPPING
 	@PostMapping("/uploadMultipleFiles")
-	@Operation(summary = "Upload multiples files", description = "Upload multiples files")
-	public List<UploadFileResponseVO> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
-		logger.info("Storing file to disk");
+	public List<UploadFileResponseVO> uploadMultipleFiles(
+		@RequestParam("files") MultipartFile[] files) {
+		logger.info("Storing files to disk");
 		
 		return Arrays.asList(files)
-				.stream()
-				.map(file -> uploadFile(file))
-				.collect(Collectors.toList());
+			.stream()
+			.map(file -> uploadFile(file))
+			.collect(Collectors.toList());
 	}
 	
-	
-	//GET MAPPING
+	//MY_file.txt
 	@GetMapping("/downloadFile/{filename:.+}")
-	@Operation(summary = "Download a specific file", description = "Download a specific file")
 	public ResponseEntity<Resource> downloadFile(
-			@PathVariable String filename, HttpServletRequest request) {
-		logger.info("Reading file to disk");
+		@PathVariable String filename, HttpServletRequest request) {
 		
-		Resource resource = service.loadFileASResource(filename);
+		logger.info("Reading a file on disk");
+		
+		Resource resource = service.loadFileAsResource(filename);
 		String contentType = "";
 		
 		try {
@@ -83,10 +78,11 @@ public class FileController {
 		
 		if (contentType.isBlank()) contentType = "application/octet-stream";
 		
-		return 	ResponseEntity.ok()
-				.contentType(MediaType.parseMediaType(contentType))
-				.header(HttpHeaders.CONTENT_DISPOSITION,
-						"attachment; filename=\""+ resource.getFilename() + "\"")
-				.body(resource);
+		return ResponseEntity.ok()
+			.contentType(MediaType.parseMediaType(contentType))
+			.header(
+				HttpHeaders.CONTENT_DISPOSITION,
+				"attachment; filename=\"" + resource.getFilename() + "\"")
+			.body(resource);
 	}
 }

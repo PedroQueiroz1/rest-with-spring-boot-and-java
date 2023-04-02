@@ -22,17 +22,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class AuthController {
 
 	@Autowired
-	AuthService authService;
+	AuthService authServices;
 	
 	@SuppressWarnings("rawtypes")
-	@Operation(summary = "Authenticates an user and return a token")
+	@Operation(summary = "Authenticates a user and returns a token")
 	@PostMapping(value = "/signin")
 	public ResponseEntity signin(@RequestBody AccountCredentialsVO data) {
 		if (checkIfParamsIsNotNull(data))
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
-		var token = authService.signin(data);
-		if (token == null)
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
+		var token = authServices.signin(data);
+		if (token == null) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
 		return token;
 	}
 	
@@ -43,7 +42,7 @@ public class AuthController {
 			@RequestHeader("Authorization") String refreshToken) {
 		if (checkIfParamsIsNotNull(username, refreshToken))
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
-		var token = authService.refreshToken(username, refreshToken);
+		var token = authServices.refreshToken(username, refreshToken);
 		if (token == null) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
 		return token;
 	}
@@ -57,5 +56,4 @@ public class AuthController {
 		return data == null || data.getUsername() == null || data.getUsername().isBlank()
 				 || data.getPassword() == null || data.getPassword().isBlank();
 	}
-	
 }
