@@ -39,7 +39,6 @@ import io.restassured.specification.RequestSpecification;
 public class BookControllerYamlTest extends AbstractIntegrationTest {
 
     private static RequestSpecification specification;
-
     private static YMLMapper objectMapper;
 
     private static BookVO book;
