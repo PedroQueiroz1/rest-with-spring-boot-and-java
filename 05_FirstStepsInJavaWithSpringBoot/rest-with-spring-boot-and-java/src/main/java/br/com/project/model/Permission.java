@@ -24,11 +24,7 @@ public class Permission implements GrantedAuthority, Serializable {
 	@Column
 	private String description;
 
-	
-	public Permission() {
-
-	}
-
+	public Permission() {}
 
 	@Override
 	public String getAuthority() {

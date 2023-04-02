@@ -1,5 +1,7 @@
 package br.com.project.services;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.logging.Logger;
 
@@ -9,9 +11,6 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.stereotype.Service;
 
 import br.com.project.controllers.BookController;
@@ -33,7 +32,6 @@ public class BookService {
 	@Autowired
 	PagedResourcesAssembler<BookVO> assembler;
 
-	// FIND ALL
 	public PagedModel<EntityModel<BookVO>> findAll(Pageable pageable) {
 
 		logger.info("Finding all books!");
@@ -52,7 +50,6 @@ public class BookService {
 		return assembler.toModel(booksVOs, findAllLink);
 	}
 
-	// FIND BY ID
 	public BookVO findById(Long id) {
 		
 		logger.info("Finding one book!");
@@ -64,7 +61,6 @@ public class BookService {
 		return vo;
 	}
 	
-	// CREATE
 	public BookVO create(BookVO book) {
 
 		if (book == null) throw new RequiredObjectIsNullException();
@@ -76,7 +72,6 @@ public class BookService {
 		return vo;
 	}
 	
-	// UPDATE
 	public BookVO update(BookVO book) {
 
 		if (book == null) throw new RequiredObjectIsNullException();
@@ -96,7 +91,6 @@ public class BookService {
 		return vo;
 	}
 	
-	// DELETE
 	public void delete(Long id) {
 		
 		logger.info("Deleting one book!");

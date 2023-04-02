@@ -25,40 +25,43 @@ public class FileStorageService {
 	@Autowired
 	public FileStorageService(FileStorageConfig fileStorageConfig) {
 		Path path = Paths.get(fileStorageConfig.getUploadDir())
-				.toAbsolutePath().normalize();
+			.toAbsolutePath().normalize();
 		
 		this.fileStorageLocation = path;
 		
 		try {
 			Files.createDirectories(this.fileStorageLocation);
 		} catch (Exception e) {
-			throw new FileStorageException("Could not create the directory where files will be stored!", e);
+			throw new FileStorageException(
+				"Could not create the directory where the uploaded files will be stored!", e);
 		}
 	}
 	
 	public String storeFile(MultipartFile file) {
-		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		
+		String filename = StringUtils.cleanPath(file.getOriginalFilename());
 		try {
-			if (fileName.contains("..")) {
-				throw new FileStorageException("Sorry! FileName contains invalid path sequence" + fileName);
+			// Filename..txt
+			if (filename.contains("..")) {
+				throw new FileStorageException(
+					"Sorry! Filename contains invalid path sequence " + filename);
 			}
-			Path targetLocation = this.fileStorageLocation.resolve(fileName);
+			Path targetLocation = this.fileStorageLocation.resolve(filename);
 			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-			return fileName;
+			return filename;
 		} catch (Exception e) {
-			throw new FileStorageException("Could not store file" + fileName + ". Please try again!", e);
+			throw new FileStorageException(
+				"Could not store file " + filename + ". Please try again!", e);
 		}
 	}
 	
-	public Resource loadFileAsResource(String fileName) {
+	public Resource loadFileAsResource(String filename) {
 		try {
-			Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+			Path filePath = this.fileStorageLocation.resolve(filename).normalize();
 			Resource resource = new UrlResource(filePath.toUri());
 			if (resource.exists()) return resource;
 			else throw new MyFileNotFoundException("File not found");
 		} catch (Exception e) {
-			throw new MyFileNotFoundException("File not found" + fileName, e);
+			throw new MyFileNotFoundException("File not found" + filename, e);
 		}
 	}
 }

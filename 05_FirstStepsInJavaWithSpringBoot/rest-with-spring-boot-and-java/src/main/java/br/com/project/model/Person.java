@@ -18,7 +18,6 @@ public class Person implements Serializable{
  
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id", updatable = false, nullable = false)
 	private Long id;
 	
 	@Column(name="first_name", nullable=false, length = 80)
@@ -27,7 +26,7 @@ public class Person implements Serializable{
 	@Column(name="last_name", nullable=false, length = 80)
 	private String lastName;
 	
-	@Column(nullable=false, length = 80)
+	@Column(nullable=false, length = 100)
 	private String address;
 	
 	@Column(nullable=false, length = 6)
