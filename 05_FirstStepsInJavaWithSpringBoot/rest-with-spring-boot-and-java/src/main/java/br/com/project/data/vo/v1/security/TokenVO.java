@@ -10,23 +10,26 @@ public class TokenVO implements Serializable{
 	private String username;
 	private Boolean authenticated;
 	private Date created;
-	private Date expirated;
+	private Date expiration;
 	private String accessToken;
 	private String refreshToken;
 	
 	public TokenVO() {}
 	
-	public TokenVO(String username, Boolean authenticated, Date created, Date expirated, String accessToken,
+	public TokenVO(
+			String username,
+			Boolean authenticated,
+			Date created,
+			Date expiration,
+			String accessToken,
 			String refreshToken) {
 		this.username = username;
 		this.authenticated = authenticated;
 		this.created = created;
-		this.expirated = expirated;
+		this.expiration = expiration;
 		this.accessToken = accessToken;
 		this.refreshToken = refreshToken;
 	}
-
-
 
 	public String getUsername() {
 		return username;
@@ -52,12 +55,12 @@ public class TokenVO implements Serializable{
 		this.created = created;
 	}
 
-	public Date getExpirated() {
-		return expirated;
+	public Date getExpiration() {
+		return expiration;
 	}
 
-	public void setExpirated(Date expirated) {
-		this.expirated = expirated;
+	public void setExpiration(Date expiration) {
+		this.expiration = expiration;
 	}
 
 	public String getAccessToken() {
@@ -83,7 +86,7 @@ public class TokenVO implements Serializable{
 		result = prime * result + ((accessToken == null) ? 0 : accessToken.hashCode());
 		result = prime * result + ((authenticated == null) ? 0 : authenticated.hashCode());
 		result = prime * result + ((created == null) ? 0 : created.hashCode());
-		result = prime * result + ((expirated == null) ? 0 : expirated.hashCode());
+		result = prime * result + ((expiration == null) ? 0 : expiration.hashCode());
 		result = prime * result + ((refreshToken == null) ? 0 : refreshToken.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
@@ -113,10 +116,10 @@ public class TokenVO implements Serializable{
 				return false;
 		} else if (!created.equals(other.created))
 			return false;
-		if (expirated == null) {
-			if (other.expirated != null)
+		if (expiration == null) {
+			if (other.expiration != null)
 				return false;
-		} else if (!expirated.equals(other.expirated))
+		} else if (!expiration.equals(other.expiration))
 			return false;
 		if (refreshToken == null) {
 			if (other.refreshToken != null)
@@ -130,8 +133,4 @@ public class TokenVO implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
-	
 }
