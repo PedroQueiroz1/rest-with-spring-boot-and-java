@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@XmlRootElement(name="Group")
 public class WrapperPersonVO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@XmlRootElement(name="Group")
 public class PersonVO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
