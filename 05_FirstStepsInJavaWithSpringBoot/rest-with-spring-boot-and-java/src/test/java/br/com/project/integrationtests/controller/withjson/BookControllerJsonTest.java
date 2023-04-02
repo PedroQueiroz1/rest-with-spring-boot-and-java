@@ -21,8 +21,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.project.configs.TestConfigs;
+import br.com.project.data.vo.v1.security.AccountCredentialsVO;
 import br.com.project.integrationtests.testcontainers.AbstractIntegrationTest;
-import br.com.project.integrationtests.vo.AccountCredentialsVO;
 import br.com.project.integrationtests.vo.BookVO;
 import br.com.project.integrationtests.vo.TokenVO;
 import br.com.project.integrationtests.vo.wrappers.WrapperBookVO;

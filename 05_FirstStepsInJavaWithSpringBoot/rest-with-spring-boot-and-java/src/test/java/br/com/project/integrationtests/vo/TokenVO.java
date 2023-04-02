@@ -33,7 +33,7 @@ public class TokenVO implements Serializable{
 		this.accessToken = accessToken;
 		this.refreshToken = refreshToken;
 	}
-
+	
 	public String getUsername() {
 		return username;
 	}
