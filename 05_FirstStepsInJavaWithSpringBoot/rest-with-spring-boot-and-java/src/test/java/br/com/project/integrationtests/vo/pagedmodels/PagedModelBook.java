@@ -6,7 +6,7 @@ import br.com.project.integrationtests.vo.BookVO;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="Group")
+@XmlRootElement
 public class PagedModelBook {
 
 	@XmlElement(name = "content")
