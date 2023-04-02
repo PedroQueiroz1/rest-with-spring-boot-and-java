@@ -5,7 +5,7 @@ import java.util.Date;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="tokenVO")
+@XmlRootElement(name="tokenVO", namespace="")
 public class TokenVO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
