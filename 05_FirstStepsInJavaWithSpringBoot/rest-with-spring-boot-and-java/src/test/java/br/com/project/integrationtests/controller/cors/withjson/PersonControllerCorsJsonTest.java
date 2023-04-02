@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.project.configs.TestConfigs;
 import br.com.project.data.vo.v1.security.TokenVO;
+import br.com.project.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.project.integrationtests.vo.AccountCredentialsVO;
 import br.com.project.integrationtests.vo.PersonVO;
 import io.restassured.builder.RequestSpecBuilder;
@@ -29,7 +30,7 @@ import io.restassured.specification.RequestSpecification;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(OrderAnnotation.class)
-public class PersonControllerCorsJsonTest {
+public class PersonControllerCorsJsonTest extends AbstractIntegrationTest {
 
 	private static RequestSpecification specification;
 	private static ObjectMapper objectMapper;
