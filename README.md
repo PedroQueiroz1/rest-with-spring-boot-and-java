@@ -12,4 +12,7 @@ I'm studying a little more to stay updated with the new contents, etc.
 
 [![Docker Hub Repo](https://img.shields.io/docker/pulls/pedroqueiroz1/rest-with-spring-boot.svg)](https://hub.docker.com/repository/docker/pedroqueiroz1/rest-with-spring-boot)
 
-*And I'm doing some experiments with this project so it has a lot o bugs! BUGS = FUN
+[![Continuous Integration with Github Actions](https://github.com/PedroQueiroz1/rest-with-spring-boot-and-java/actions/workflows/maven.yml/badge.svg)](https://github.com/PedroQueiroz1/rest-with-spring-boot-and-java/actions/workflows/maven.yml)
+
+
+:tada: This project is finished :tada:
